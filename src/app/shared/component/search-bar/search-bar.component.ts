@@ -19,4 +19,10 @@ export class SearchBarComponent {
     if(this.SearchBarData.classify.fn)
       this.SearchBarData.classify.fn(item) ;
   };
+  dateChange($event, type : string , item : Object ){
+    console.log($event);
+    console.log(123) ;
+  };
+
+
 };

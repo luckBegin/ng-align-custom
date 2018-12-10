@@ -9,11 +9,8 @@ export class TemplateComponent implements OnInit{
   constructor(){} ;
 
   ngOnInit(): void {
-    console.log(this.tableData) ;
-  };
-  dateModel : any = '' ;
-  dateModel2 : any = '';
 
+  };
   tableData = {
     columns :  [
       { title : "name" , reflect : "name" , type : "text" , filter : (data) => 123 , fn : (data) => console.log(123) } ,
@@ -33,6 +30,7 @@ export class TemplateComponent implements OnInit{
 
   searchBarData = {
     classify : {
+      name : "分类" ,
       data : [ { id : 1 , name : 123 } ] ,
       fn( data ){
         console.log(data) ;
@@ -52,8 +50,17 @@ export class TemplateComponent implements OnInit{
       }
     }],
     sections: [
-      { name : "姓名" , type :'dateRange' , placeHolders : ["请输入姓名"] , change : ($event) => {
+      { name : "开始时间"  , type :'dateRange' , placeHolders : ["请输入" , '请输入'] , change : ($event) => {
         console.log($event) ;
+      }}
+    ],
+    conditions : [
+      { name : "姓名" , type : 'input' , placeHolder : '123' , change : ($event) => {
+        console.log($event) ;
+      }},{ name : "姓名" , type : 'select' , data : [ { key : "123" , value : "123"} ] , placeHolder : '123' , change : ($event) => {
+          console.log($event) ;
+      }},{ name : "姓名" , type : 'date' , placeHolder : '123' , change : ($event) => {
+          console.log($event) ;
       }}
     ]
   };

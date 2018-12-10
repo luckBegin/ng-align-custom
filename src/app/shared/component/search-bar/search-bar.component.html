@@ -1,34 +1,102 @@
 <div class="search-bar-wrap">
   <!-- classify -->
-  <div *ngIf = 'SearchBarData.classify' style="margin-bottom: 10px;">
-    <tag-select class="border-dashed">
-      <nz-tag
-        *ngFor="let item of SearchBarData.classify.data; let idx = index"
-        [nzChecked] = 'classifyActive === item.id'
-        (click)="classifyChange(item)"
-      >
+  <div *ngIf = 'SearchBarData.classify' class="border-dashed c-flex-row-start">
+    <div class="classify_title">
+      {{ SearchBarData.classify.name }}
+    </div>
+    <div class="classify_tags">
+      <div class="tags" *ngFor="let item of SearchBarData.classify.data; let idx = index">
         {{ item.name }}
-      </nz-tag>
-    </tag-select>
+      </div>
+    </div>
+    <!--<tag-select style="padding-left: 7px;">-->
+      <!--<nz-tag-->
+        <!--*ngFor="let item of SearchBarData.classify.data; let idx = index"-->
+        <!--[nzChecked] = 'classifyActive === item.id'-->
+        <!--(click)="classifyChange(item)"-->
+      <!--&gt;-->
+        <!---->
+      <!--</nz-tag>-->
+    <!--</tag-select>-->
   </div>
 
-  <div class="sectionGroup" *ngIf = 'SearchBarData.sections'>
-    <div *ngFor="let item of SearchBarData.sections">
-      <div *ngIf = 'item.type === "dateRange" '>
-        <nz-date-picker [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
+  <!-- condition -->
+  <div class="border-dashed" *ngIf = 'SearchBarData.conditions'>
+    <div class="c-flex-row-start c-flex-auto-wrap conditionWrap">
+      <div *ngFor="let item of SearchBarData.conditions" class="conditionSection">
+        <!-- input -->
+        <div *ngIf="item.type === 'input'" class="c-flex-row-start">
+          <div class="searchTitle">
+            <span>
+              {{ item.name }}
+            </span>:
+          </div>
+          <div class="c-flex-row-start" style="flex:1">
+            <input #input nz-input [placeholder]="item.placeHolder" (change)="item.change(input.value)">
+          </div>
+        </div>
+
+        <!-- select -->
+        <div *ngIf="item.type === 'select'" class="c-flex-row-start">
+          <div class="searchTitle">
+            <span>
+              {{ item.name }}
+            </span>:
+          </div>
+          <div class="c-flex-row-start" style="flex:1">
+            <nz-select style="width: 100%;" [nzPlaceHolder]="item.placeHolder" (ngModelChange) = 'item.change($event)'>
+              <nz-option *ngFor="let ops of item.data " [nzValue]="ops.value" [nzLabel]="ops.key" ></nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <!-- date -->
+        <div *ngIf="item.type === 'date'" class="c-flex-row-start">
+          <div class="searchTitle">
+            <span>
+              {{ item.name }}
+            </span>:
+          </div>
+          <div class="c-flex-row-start" style="flex:1">
+            <nz-date-picker [(ngModel)]="item['date'] " [nzPlaceHolder] = 'item.placeHolder' (ngModelChange) = 'item.change($event)'></nz-date-picker>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
+
+  <!-- dateTime -->
+  <div class="border-dashed" *ngIf = 'SearchBarData.sections'>
+    <div *ngFor="let item of SearchBarData.sections">
+      <div *ngIf = 'item.type === "dateRange"' class="c-flex-row-start">
+
+        <div class="searchSection c-flex-row-start c-flex-auto-wrap">
+          <div class="searchTitle dateTimeTitle">
+            <span>
+              {{ item.name }} :
+            </span>
+          </div>
+          <nz-date-picker class="dateTime" [(ngModel)]="item['start'] " [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
+          <div class="splitLine"> - </div>
+          <nz-date-picker class="dateTime" [(ngModel)]="item['end'] " [nzPlaceHolder] = 'item.placeHolders[1]' (ngModelChange) = 'item.change($event , "end")'></nz-date-picker>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- btn -->
   <div *ngIf = 'SearchBarData.btn'>
-    <div class="btnWrap c-flex-row-start ">
+    <div class="btnWrap c-flex-row-start">
       <div *ngFor="let item of SearchBarData.btn">
+
         <button
           *ngIf="item.type === 'search' "
           nz-button
           nzType="primary"
           (click)="item.fn()"
         >
-            <i class="anticon anticon-search"></i>
+          <i class="anticon anticon-search"></i>
           {{ item.name }}
         </button>
 

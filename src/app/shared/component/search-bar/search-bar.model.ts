@@ -1,6 +1,7 @@
 interface classifyModel {
   fn : Function ,
   data : { id : any, name : string }[] ;
+  name : string
 }
 
 interface btnModel{
@@ -13,7 +14,7 @@ interface sectionModel {
   name ?: string ,
   names ?: string[] ,
   type : "input" | "select" | "date" | "dateRange" ,
-  data? : any ,
+  data? : any[] ,
   placeHolder? : string ,
   placeHolders? : string[],
   change : any
@@ -21,5 +22,6 @@ interface sectionModel {
 export interface SearchBarModel {
   classify : classifyModel ;
   btn : btnModel ,
-  sections : sectionModel[]
+  sections : sectionModel[] ,
+  conditions : sectionModel[]
 }
