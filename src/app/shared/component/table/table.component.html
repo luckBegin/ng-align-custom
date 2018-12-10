@@ -1,0 +1,71 @@
+<div class="tableWrap">
+  <div class="scrollWrap">
+    <nz-table
+      #TableDatas
+      nzBordered
+      [nzData]="TableData.data"
+      (nzPageIndexChange) = 'pageChange("page",$event)'
+      (nzPageSizeChange) = 'pageChange("size",$event)'
+      nzShowSizeChanger nzShowQuickJumper nzShowTotal
+      [nzLoading] = 'TableData.loading'
+    >
+      <thead>
+      <tr>
+        <th *ngIf="TableData.showIndex"> 序号 </th>
+        <th *ngFor = 'let item of TableData.columns'>
+          {{ item.title }}
+        </th>
+        <th *ngIf = 'TableData.btn && TableData.btn.title' style="width:150px">
+          {{ TableData.btn.title }}
+        </th>
+      </tr>
+      </thead>
+      <tbody class="tbody-component">
+      <tr *ngFor="let data of TableDatas.data ; let dataIndex = index ">
+        <td  *ngIf="TableData.showIndex">
+          {{ dataIndex + 1 }}
+        </td>
+
+        <td *ngFor = 'let column of TableData.columns;let columnIndex = index'>
+
+          <!-- textType -->
+          <span *ngIf = 'column.type == "text" '>
+        <span *ngIf = 'column.filter' (click) = 'column.fn && column.fn(data)' [ngStyle] = "{'color' : column.color?column.color:'#333'}">
+          {{ column.filter(data) }}
+        </span>
+        <span *ngIf = '!column.filter' (click) = 'column.fn && column.fn(data)'  [ngStyle] = "{'color' : column.color?column.color:'#333'}">
+          {{ data[column.reflect] }}
+        </span>
+      </span>
+
+          <div *ngIf = 'column.type == "mark" '>
+        <span *ngIf = '!column.filter'>
+          <nz-tag [nzColor]="(column.color && column.color[data[column.reflect]])?column.color[data[column.reflect]]:'#108ee9'">
+            {{ data[column.reflect] }}
+          </nz-tag>
+        </span>
+            <span *ngIf = 'column.filter'>
+          <nz-tag [nzColor]="(column.color && column.color[data[column.reflect]])?column.color[data[column.reflect]]:'#108ee9'">
+            {{ column.filter(data) }}
+          </nz-tag>
+        </span>
+          </div>
+
+          <div *ngIf = 'column.type === "img" ' class="c-flex-column-center">
+            <img [src] = 'data[column.reflect]' class="c-img-res" alt="" style='width: 54px; height:54px;'>
+          </div>
+        </td>
+
+        <td *ngIf = 'TableData.btn && TableData.btn.title' class="c-flex-row-center operWrap"  style="width:230px" >
+          <div *ngFor = 'let btn of TableData.btn.items'
+               (click) = 'btn.fn(data)' class="btnOper"
+               [ngClass]=" { 'del' : btn.type === 'del'}"
+          >
+            <span>{{ btn.title }}</span>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

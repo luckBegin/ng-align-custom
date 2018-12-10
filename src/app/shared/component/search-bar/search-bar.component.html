@@ -1,0 +1,47 @@
+<div class="search-bar-wrap">
+  <!-- classify -->
+  <div *ngIf = 'SearchBarData.classify' style="margin-bottom: 10px;">
+    <tag-select class="border-dashed">
+      <nz-tag
+        *ngFor="let item of SearchBarData.classify.data; let idx = index"
+        [nzChecked] = 'classifyActive === item.id'
+        (click)="classifyChange(item)"
+      >
+        {{ item.name }}
+      </nz-tag>
+    </tag-select>
+  </div>
+
+  <div class="sectionGroup" *ngIf = 'SearchBarData.sections'>
+    <div *ngFor="let item of SearchBarData.sections">
+      <div *ngIf = 'item.type === "dateRange" '>
+        <nz-date-picker [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
+    </div>
+  </div>
+  <!-- btn -->
+  <div *ngIf = 'SearchBarData.btn'>
+    <div class="btnWrap c-flex-row-start ">
+      <div *ngFor="let item of SearchBarData.btn">
+        <button
+          *ngIf="item.type === 'search' "
+          nz-button
+          nzType="primary"
+          (click)="item.fn()"
+        >
+            <i class="anticon anticon-search"></i>
+          {{ item.name }}
+        </button>
+
+        <button
+          *ngIf="item.type === 'reset' "
+          nz-button
+          nzType="default"
+          (click)="item.fn()"
+        >
+          <i nz-icon type="cloud" theme="outline"></i>
+          {{ item.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
