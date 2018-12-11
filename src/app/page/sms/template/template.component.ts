@@ -1,4 +1,5 @@
 import { Component ,OnInit} from '@angular/core' ;
+import { MsgService } from '../../../service/msg/msg.service';
 
 @Component({
   selector : 'Sms-template' ,
@@ -6,7 +7,9 @@ import { Component ,OnInit} from '@angular/core' ;
   styleUrls : ['./template.component.less']
 })
 export class TemplateComponent implements OnInit{
-  constructor(){} ;
+  constructor(
+    private msg : MsgService
+  ){} ;
 
   ngOnInit(): void {
 
@@ -14,18 +17,31 @@ export class TemplateComponent implements OnInit{
   tableData = {
     columns :  [
       { title : "name" , reflect : "name" , type : "text" , filter : (data) => 123 , fn : (data) => console.log(123) } ,
+      { title : "name" , reflect : "name" , type : "mark" , filter : (data) => 123 , fn : (data) => console.log(123) } ,
+      { title : "name" , reflect : "url" , type : "img" } ,
     ] ,
-    data : [ { name : 1 , age : 3}  ,  { name : 2 , age : 4 } ] ,
+    data : [ { name : 1 , age : 3 , url : "http://life.southmoney.com/tuwen/UploadFiles_6871/201808/20180808151217303.jpg"}  ,  { name : 2 , age : 4  , url : "http://life.southmoney.com/tuwen/UploadFiles_6871/201808/20180808151217303.jpg"}  , { name : 3   , age : 4 , url : "http://life.southmoney.com/tuwen/UploadFiles_6871/201808/20180808151217303.jpg"}] ,
     btn : {
       title : "操作" ,
       items : [
         {
           type : 'del' ,
           title : "删除" ,
+          fn : ( data ) => {
+            this.msg.error("删除失败") ;
+          }
+        },{
+          type : 'add' ,
+          title : "添加" ,
+          fn : ( data ) => { console.log(data) }
+        },{
+          type : 'edit' ,
+          title : "编辑" ,
           fn : ( data ) => { console.log(data) }
         }
       ]
-    }
+    },
+    loading : false
   };
 
   searchBarData = {
@@ -69,4 +85,8 @@ export class TemplateComponent implements OnInit{
     console.log(123) ;
   };
 
+  isVisible : boolean = false ;
+  modalConfirm(){
+    this.isVisible = false ;
+  }
 };

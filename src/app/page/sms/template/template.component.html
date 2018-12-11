@@ -1,7 +1,14 @@
-<common-search-bar [SearchBarData] = 'searchBarData'>
+<div style="padding-top: 20px; margin-bottom: 20px;">
+  <common-search-bar [SearchBarData] = 'searchBarData'>
 
-</common-search-bar>
+  </common-search-bar>
+</div>
 
-<common-table [TableData]="tableData" (change)="pageChange()">
+<div>
+  <common-table [TableData]="tableData" (change)="pageChange()">
 
-</common-table>
+  </common-table>
+</div>
+<common-modal [cancel] = 'false' [isVisible]="isVisible" [title] = "'这是标题'" [type]="'success'" (confirm)="modalConfirm()">
+
+</common-modal>

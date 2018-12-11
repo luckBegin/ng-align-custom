@@ -1,23 +1,14 @@
 <div class="search-bar-wrap">
   <!-- classify -->
-  <div *ngIf = 'SearchBarData.classify' class="border-dashed c-flex-row-start">
+  <div *ngIf = 'SearchBarData.classify' class="border-dashed c-flex-row-start classifyWrap">
     <div class="classify_title">
-      {{ SearchBarData.classify.name }}
+      {{ SearchBarData.classify.name }} :
     </div>
-    <div class="classify_tags">
-      <div class="tags" *ngFor="let item of SearchBarData.classify.data; let idx = index">
+    <div class="classify_tags c-flex-row-start">
+      <div class="tags" *ngFor="let item of SearchBarData.classify.data; let idx = index" (click)="classifyChange( item )">
         {{ item.name }}
       </div>
     </div>
-    <!--<tag-select style="padding-left: 7px;">-->
-      <!--<nz-tag-->
-        <!--*ngFor="let item of SearchBarData.classify.data; let idx = index"-->
-        <!--[nzChecked] = 'classifyActive === item.id'-->
-        <!--(click)="classifyChange(item)"-->
-      <!--&gt;-->
-        <!---->
-      <!--</nz-tag>-->
-    <!--</tag-select>-->
   </div>
 
   <!-- condition -->
