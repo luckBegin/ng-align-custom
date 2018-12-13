@@ -17,7 +17,6 @@ import { SettingDrawerComponent } from './default/setting-drawer/setting-drawer.
 import { SettingDrawerItemComponent } from './default/setting-drawer/setting-drawer-item.component';
 
 const SETTINGDRAWER = [SettingDrawerComponent, SettingDrawerItemComponent];
-
 const COMPONENTS = [
   LayoutDefaultComponent,
   LayoutFullScreenComponent,

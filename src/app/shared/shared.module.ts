@@ -7,7 +7,6 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
-
 // #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
@@ -18,9 +17,9 @@ const THIRDMODULES = [
 // #endregion
 import { TableComponent } from './component/table/table.component';
 import { SearchBarComponent } from './component/search-bar/search-bar.component';
-import { ModelComponent } from './component/modal/model.component';
+import { ModalComponent } from './component/modal/modal.component';
 // #region your componets & directives
-const COMPONENTS = [ TableComponent , SearchBarComponent , ModelComponent ];
+const COMPONENTS = [ TableComponent , SearchBarComponent , ModalComponent ];
 const DIRECTIVES = [];
 // #endregion
 

@@ -39,7 +39,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     }
   `]
 })
-export class ModelComponent {
+export class ModalComponent {
   constructor(){} ;
   @Input() isVisible : boolean = false ;
   @Input() title : string = '提示' ;

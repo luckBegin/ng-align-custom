@@ -22,7 +22,7 @@ import { NzMessageService, NzIconService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { updateHostClass } from '@delon/util';
 import { ScrollService, MenuService, SettingsService } from '@delon/theme';
-
+import { fadeAnimation } from '../../routes/router-animation' ;
 // #region icons
 
 import {
@@ -77,6 +77,14 @@ import { SettingDrawerComponent } from './setting-drawer/setting-drawer.componen
   host: {
     '[class.alain-default]': 'true',
   },
+  animations : [ fadeAnimation ] ,
+  styles : [`    
+    ::ng-deep router-outlet ~ * {
+      position: absolute;
+      width: 100%;
+      padding-bottom: 60px
+    }
+  `]
 })
 export class LayoutDefaultComponent
   implements OnInit, AfterViewInit, OnDestroy {
@@ -157,5 +165,9 @@ export class LayoutDefaultComponent
 
   ngOnDestroy() {
     this.notify$.unsubscribe();
+  };
+
+  getRouterOutletState(outlet){
+    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 }

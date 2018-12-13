@@ -63,6 +63,7 @@ export class TemplateComponent implements OnInit{
       type : "reset" ,
       fn : () => {
         console.log(321) ;
+        this.isVisible = true ;
       }
     }],
     sections: [

@@ -27,7 +27,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘', titleI18n: 'dashboard' } },
-      { path: 'sms', loadChildren: '../page/sms/sms.module#SmsModule' }
+      { path: 'sms', loadChildren: '../page/sms/sms.module#SmsModule' } ,
+      { path: 'system', loadChildren: '../page/system/system.module#SystemModule' } ,
     ]
   },
   // 全屏布局

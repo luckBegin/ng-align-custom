@@ -27,6 +27,16 @@ export class  MenuService {
               icon: "anticon anticon-message"
             }
           ]
+        },        {
+          text: '系统设置',
+          group: true,
+          children: [
+            {
+              text: '角色设置',
+              link: '/system/role',
+              icon: "anticon anticon-message"
+            }
+          ]
         }
       ];
 

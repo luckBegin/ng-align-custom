@@ -40,9 +40,7 @@ export class StartupService {
         map( (res : RESPONSE) => res.data )
       )
       .subscribe( ( data : Object[] ) => {
-
         this.menuService.add(data as any ) ;
-
         resolve({});
       });
     // zip(
