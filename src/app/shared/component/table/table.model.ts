@@ -5,10 +5,17 @@ interface column {
   fn : any ;
   filter : any ;
 }
+
+interface btnGroup {
+  type : "edit" | "add" | "del"
+  title : string ;
+  fn : Function
+};
+
 export interface TableData{
     columns ?: column[] ,
     data ?: object[],
     showIndex ?: boolean,
     loading ?: boolean ,
-    btn ?: object ,
+    btn  : btnGroup
 };

@@ -82,12 +82,13 @@ export class TemplateComponent implements OnInit{
     ]
   };
 
-  pageChange(){
+  pageChange() : void {
     console.log(123) ;
   };
 
   isVisible : boolean = false ;
   modalConfirm(){
     this.isVisible = false ;
-  }
+  };
+
 };
