@@ -1,5 +1,7 @@
 import { Component ,OnInit} from '@angular/core' ;
 import { MsgService } from '../../../service/msg/msg.service';
+import { FormValid } from '../../../../decorators/formValid.decorator';
+import { Service } from '../../../../decorators/service.decorator';
 
 @Component({
   selector : 'Sms-template' ,
@@ -8,12 +10,11 @@ import { MsgService } from '../../../service/msg/msg.service';
 })
 export class TemplateComponent implements OnInit{
   constructor(
-    private msg : MsgService
+    private msg : MsgService ,
   ){} ;
 
-  ngOnInit(): void {
+  ngOnInit(): void {};
 
-  };
   tableData = {
     columns :  [
       { title : "name" , reflect : "name" , type : "text" , filter : (data) => 123 , fn : (data) => console.log(123) } ,
@@ -91,4 +92,9 @@ export class TemplateComponent implements OnInit{
     this.isVisible = false ;
   };
 
+  @FormValid(['form'])
+  @Service("menuSer.post" , true , { a : 1 } )
+  check($event , data){
+    console.log(data) ;
+  };
 };

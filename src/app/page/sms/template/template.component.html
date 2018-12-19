@@ -1,6 +1,6 @@
 <page-header [title]="'基础表单'">
 </page-header>
-
+<button (click)="check($event)">check</button>
 <div style="padding-top: 20px; margin-bottom: 20px;">
   <common-search-bar [SearchBarData] = 'searchBarData'>
 
@@ -15,3 +15,14 @@
 <common-modal [cancel] = 'false' [isVisible]="isVisible" [title] = "'这是标题'" [type]="'success'" (confirm)="modalConfirm()">
 
 </common-modal>
+
+
+<!--<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">-->
+  <!--<nz-form-item class='c-formSec'>-->
+    <!--<nz-form-label [nzSm]="9" nzRequired nzFor="id">图标</nz-form-label>-->
+    <!--<nz-form-control [nzSm]="14"  [nzOffset]='1'>-->
+      <!--<input nz-input formControlName="id" id="id">-->
+      <!--<nz-form-explain *ngIf="validateForm.get('id').dirty && validateForm.get('id').errors">图标不能为空</nz-form-explain>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+<!--</form>-->
