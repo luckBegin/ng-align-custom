@@ -1,6 +1,6 @@
 export interface RESPONSE{
   success : boolean ;
   data : any
-  msg : string ;
+  message : string ;
   code : number
 };

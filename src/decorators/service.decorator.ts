@@ -1,7 +1,9 @@
 import { Observable } from 'rxjs';
 import { RESPONSE } from '../app/models';
 import { filter, map } from 'rxjs/operators';
-export function Service( serviceName : string , prevent : boolean ,  data? : any ){
+import { until } from "selenium-webdriver";
+import elementIsSelected = until.elementIsSelected;
+export function Service( serviceName : string , prevent : boolean ,  data? : string | Object ){
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ){
     if(!/\w+.\w/g.test(serviceName)){
       throw new Error("Invalid Service call ")
@@ -15,7 +17,14 @@ export function Service( serviceName : string , prevent : boolean ,  data? : any
 
       const service = serviceName.split(".") ;
 
-      ( < Observable <RESPONSE> >this[service[0]][service[1]](data) )
+      let _data = null ;
+
+      if(typeof data === 'string')
+        _data = this[data].value ;
+      if(typeof data === 'object' )
+        _data = data ;
+
+      ( < Observable <RESPONSE> >this[service[0]][service[1]](_data) )
         .pipe(
           filter( (res :RESPONSE) => {
 
@@ -28,7 +37,7 @@ export function Service( serviceName : string , prevent : boolean ,  data? : any
             };
 
             if(prevent === true && res.success === false ){
-              this.msg.error("操作失败,原因 : " + res.msg)
+              this.msg.error("操作失败,原因 : " + res.message)
             };
 
             return res.success === true ;

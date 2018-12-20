@@ -24,5 +24,4 @@ export class SearchBarComponent {
     console.log(123) ;
   };
 
-
 };
