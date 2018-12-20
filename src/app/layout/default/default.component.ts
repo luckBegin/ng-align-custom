@@ -78,13 +78,6 @@ import { SettingDrawerComponent } from './setting-drawer/setting-drawer.componen
     '[class.alain-default]': 'true',
   },
   animations : [ fadeAnimation ] ,
-  styles : [`    
-    ::ng-deep router-outlet ~ * {
-      position: absolute;
-      width: 100%;
-      padding-bottom: 60px
-    }
-  `]
 })
 export class LayoutDefaultComponent
   implements OnInit, AfterViewInit, OnDestroy {

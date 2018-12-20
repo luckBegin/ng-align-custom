@@ -2,10 +2,10 @@
   <div class="scrollWrap">
     <nz-table
       #TableDatas
+      nzShowSizeChanger nzShowQuickJumper nzShowTotal
       [nzData]="TableData.data"
       (nzPageIndexChange) = 'pageChange("page",$event)'
       (nzPageSizeChange) = 'pageChange("size",$event)'
-      nzShowSizeChanger nzShowQuickJumper nzShowTotal
       [nzLoading] = 'TableData.loading'
     >
       <thead>
@@ -69,7 +69,7 @@
             <span class="table_title">
               {{ column.title }} :
             </span>
-            <img [src] = 'data[column.reflect]' class="c-img-res" alt="" style='width: 54px; height:54px;'>
+            <img [src] = 'data[column.reflect]' class="c-img-res" alt="" style='width: 54px; height:54px;' (click) = 'column.fn && column.fn(data)'>
           </div>
         </td>
 

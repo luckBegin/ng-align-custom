@@ -9,14 +9,11 @@
 
 <div>
   <common-table [TableData]="tableData" (change)="pageChange()">
-
   </common-table>
 </div>
+
 <common-modal [cancel] = 'false' [isVisible]="isVisible" [title] = "'这是标题'" [type]="'success'" (confirm)="modalConfirm()">
-
 </common-modal>
-
-
 <!--<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">-->
   <!--<nz-form-item class='c-formSec'>-->
     <!--<nz-form-label [nzSm]="9" nzRequired nzFor="id">图标</nz-form-label>-->
