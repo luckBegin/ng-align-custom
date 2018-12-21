@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { MsgService } from '../../../../service/msg/msg.service';
 
 @Component({
   selector: 'header-user',
@@ -31,10 +32,12 @@ export class HeaderUserComponent {
     public settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private msg : MsgService
   ) {}
 
   logout() {
-    this.tokenService.clear();
-    this.router.navigateByUrl(this.tokenService.login_url);
+    this.msg.notifyWarn("没有登录" , "没有退出,别瞎点！！！") ;
+    // this.tokenService.clear();
+    // this.router.navigateByUrl(this.tokenService.login_url);
   }
 }
