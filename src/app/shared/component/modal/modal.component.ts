@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector : "common-modal" ,
-  template : `<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="isVisible = false">
+  template : `<nz-modal [nzVisible]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="isVisible = false">
     <ng-template #modalTitle>
       {{ title }}
     </ng-template>
@@ -32,7 +32,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       color : #579e59
     }
     .icon-error{
-      color : #a94442
+      color : #e4322e
     }
     .icon-warn{
       color : #8a6d3b

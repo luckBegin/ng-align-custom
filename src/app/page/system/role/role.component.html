@@ -1,2 +1,10 @@
-<page-header [title]="'角色'">
+<page-header [title]="'角色管理'">
 </page-header>
+
+<div class="c-container">
+  <button nz-button nzType="primary" class="c-button" (click)='addNewRole() '>
+    新增
+  </button>
+  <common-table [TableData]="tableData" (change)="pageChange()">
+  </common-table>
+</div>

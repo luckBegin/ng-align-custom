@@ -21,8 +21,6 @@ export class SearchBarComponent {
   };
   dateChange($event, type : string , item : Object ){
     console.log($event);
-    console.log(123) ;
   };
-
 
 };

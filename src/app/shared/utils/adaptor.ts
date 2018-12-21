@@ -2,6 +2,30 @@ const checkType = function(target : any , type :string ) : boolean {
   return Object.prototype.toString.call(target) === `[object ${type}]` ;
 };
 
+class TreeNodes {
+  title : string ;
+  key : number ;
+  children : TreeNodes[] = [] ;
+
+  constructor(title : string , key : number){
+    this.title = title ;
+    this.key = key ;
+  };
+};
+
+const recursive = function(target : any[] , data : any[] , map : { title : string , key : string | number } ){
+  data.forEach( item => {
+    let _obj = new TreeNodes( item[map['title'] ] , item[map['key'] ]) ;
+    target.push(_obj) ;
+
+    Object.keys(item).forEach( ( key ) => {
+      if(key != 'children')
+        _obj[key] = item[key] ;
+    });
+    if(item.children)
+      recursive(_obj.children , item.children , map ) ;
+  });
+};
 export const AdaptorUtils = {
   reflect(target : object[]  , map : object ) : object[] {
     if(checkType(target , 'Array')){
@@ -19,5 +43,13 @@ export const AdaptorUtils = {
       return _arr
     };
     return target ;
+  },
+
+  makeTreeNode(map : { title : string , key : string | number } , data : any[]) : TreeNodes[] {
+    var _arr = [] ;
+
+    recursive( _arr , data , map) ;
+
+    return _arr ;
   }
 };

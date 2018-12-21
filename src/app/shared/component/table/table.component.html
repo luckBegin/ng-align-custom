@@ -2,11 +2,12 @@
   <div class="scrollWrap">
     <nz-table
       #TableDatas
+      nzShowSizeChanger nzShowQuickJumper nzShowTotal
       [nzData]="TableData.data"
       (nzPageIndexChange) = 'pageChange("page",$event)'
       (nzPageSizeChange) = 'pageChange("size",$event)'
-      nzShowSizeChanger nzShowQuickJumper nzShowTotal
       [nzLoading] = 'TableData.loading'
+      [nzPageIndex] = 'TableData.page'
     >
       <thead>
         <tr>
@@ -69,7 +70,21 @@
             <span class="table_title">
               {{ column.title }} :
             </span>
-            <img [src] = 'data[column.reflect]' class="c-img-res" alt="" style='width: 54px; height:54px;'>
+            <img [src] = 'data[column.reflect]' class="c-img-res" alt="" style='width: 54px; height:54px;' (click) = 'column.fn && column.fn(data)'>
+          </div>
+
+          <div *ngIf = 'column.type === "switch" ' class="tableSection">
+            <span class="table_title">
+              {{ column.title }} :
+            </span>
+            <nz-switch
+              [ngModel]="column.filter(data)"
+              nzControl = true
+              nzCheckedChildren="开"
+              nzUnCheckedChildren="关"
+              (click)= 'column.fn && column.fn(data)'
+            >
+            </nz-switch>
           </div>
         </td>
 
@@ -87,7 +102,6 @@
             </div>
           </div>
         </td>
-
       </tr>
       </tbody>
     </nz-table>

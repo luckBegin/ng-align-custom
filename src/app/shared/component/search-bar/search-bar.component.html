@@ -35,7 +35,8 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <nz-select style="width: 100%;" [nzPlaceHolder]="item.placeHolder" (ngModelChange) = 'item.change($event)'>
+            <nz-select nzAllowClear style="width: 100%;" [ngModel]="'null'" [nzPlaceHolder]="item.placeHolder" (ngModelChange) = 'item.change($event)'>
+              <nz-option [nzValue]="'null'" [nzLabel]="'全部'"></nz-option>
               <nz-option *ngFor="let ops of item.data " [nzValue]="ops.value" [nzLabel]="ops.key" ></nz-option>
             </nz-select>
           </div>
@@ -49,7 +50,7 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <nz-date-picker [(ngModel)]="item['date'] " [nzPlaceHolder] = 'item.placeHolder' (ngModelChange) = 'item.change($event)'></nz-date-picker>
+            <nz-date-picker nzAllowClear [(ngModel)]="item['date'] " [nzPlaceHolder] = 'item.placeHolder' (ngModelChange) = 'item.change($event)'></nz-date-picker>
           </div>
         </div>
 
@@ -68,9 +69,9 @@
               {{ item.name }} :
             </span>
           </div>
-          <nz-date-picker class="dateTime" [(ngModel)]="item['start'] " [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
+          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['start'] " [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
           <div class="splitLine"> - </div>
-          <nz-date-picker class="dateTime" [(ngModel)]="item['end'] " [nzPlaceHolder] = 'item.placeHolders[1]' (ngModelChange) = 'item.change($event , "end")'></nz-date-picker>
+          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['end'] " [nzPlaceHolder] = 'item.placeHolders[1]' (ngModelChange) = 'item.change($event , "end")'></nz-date-picker>
         </div>
       </div>
     </div>

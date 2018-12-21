@@ -18,6 +18,7 @@ const THIRDMODULES = [
 import { TableComponent } from './component/table/table.component';
 import { SearchBarComponent } from './component/search-bar/search-bar.component';
 import { ModalComponent } from './component/modal/modal.component';
+
 // #region your componets & directives
 const COMPONENTS = [ TableComponent , SearchBarComponent , ModalComponent ];
 const DIRECTIVES = [];

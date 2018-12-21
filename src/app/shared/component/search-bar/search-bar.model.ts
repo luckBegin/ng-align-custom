@@ -20,8 +20,8 @@ interface sectionModel {
   change : any
 }
 export interface SearchBarModel {
-  classify : classifyModel ;
-  btn : btnModel ,
-  sections : sectionModel[] ,
-  conditions : sectionModel[]
+  classify ?: classifyModel ;
+  btn ?: btnModel[] ,
+  sections ?: sectionModel[] ,
+  conditions ?: sectionModel[]
 }

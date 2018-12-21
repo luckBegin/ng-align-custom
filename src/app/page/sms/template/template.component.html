@@ -1,28 +1,81 @@
-<page-header [title]="'基础表单'">
+<page-header [title]="'短信模板配置'">
 </page-header>
-<button (click)="check($event)">check</button>
-<div style="padding-top: 20px; margin-bottom: 20px;">
-  <common-search-bar [SearchBarData] = 'searchBarData'>
+<div class="c-container">
+  <div style="padding-top: 20px; margin-bottom: 20px;">
+    <common-search-bar [SearchBarData] = 'searchBarData'>
+    </common-search-bar>
+  </div>
+  <div>
+      <button
+        nz-button
+        nzType="primary"
+        class="c-button"
+        (click)="add()"
+      >
+        新增
+      </button>
+    <common-table [TableData]="tableData" (change)="pageChange()">
+    </common-table>
+  </div>
 
-  </common-search-bar>
+  <common-modal [cancel] = 'true' [isVisible] = "isVisible" [title] = "'删除'" [body]="'一旦删除,该数据不可恢复'" [type]="'warn'" (confirm)="modalConfirm()">
+  </common-modal>
 </div>
 
-<div>
-  <common-table [TableData]="tableData" (change)="pageChange()">
+<nz-modal [(nzVisible)]="formVisible" [nzTitle]="formTitle" [nzContent]="formContent" [nzFooter]="formFooter" (nzOnCancel)="formVisible = false">
+  <ng-template #formTitle>
+    <div *ngIf="isEdit === false">
+      新增
+    </div>
+    <div *ngIf="isEdit === true ">
+      保存
+    </div>
+  </ng-template>
 
-  </common-table>
-</div>
-<common-modal [cancel] = 'false' [isVisible]="isVisible" [title] = "'这是标题'" [type]="'success'" (confirm)="modalConfirm()">
+  <ng-template #formContent>
 
-</common-modal>
+    <form nz-form [nzLayout]="'inline'" [formGroup]="form">
+      <nz-form-item class='c-formSec'>
+        <!-- 类型 -->
+        <nz-form-label [nzSm]="5" nzRequired nzFor="projectType">类型</nz-form-label>
+        <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+          <nz-select name="select-error" formControlName="projectType" id="projectType" nzPlaceHolder="请选择类型">
+            <nz-option *ngFor="let item of type" [nzValue]="item.value" [nzLabel]="item.key" ></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="form.get('projectType').dirty && form.get('projectType').errors">类型不能为空</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
 
+      <!-- 状态 -->
+      <nz-form-item class='c-formSec'>
+        <nz-form-label [nzSm]="5" nzRequired nzFor="status">状态</nz-form-label>
+        <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+          <nz-select name="select-error" formControlName="status" id="status" nzPlaceHolder="请选择状态">
+            <nz-option *ngFor="let item of status" [nzValue]="item.value" [nzLabel]="item.key"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="form.get('status').dirty && form.get('status').errors">状态不能为空</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
 
-<!--<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">-->
-  <!--<nz-form-item class='c-formSec'>-->
-    <!--<nz-form-label [nzSm]="9" nzRequired nzFor="id">图标</nz-form-label>-->
-    <!--<nz-form-control [nzSm]="14"  [nzOffset]='1'>-->
-      <!--<input nz-input formControlName="id" id="id">-->
-      <!--<nz-form-explain *ngIf="validateForm.get('id').dirty && validateForm.get('id').errors">图标不能为空</nz-form-explain>-->
-    <!--</nz-form-control>-->
-  <!--</nz-form-item>-->
-<!--</form>-->
+      <!-- 状态 -->
+      <nz-form-item class='c-formSec'>
+        <nz-form-label [nzSm]="5" nzRequired nzFor="status">内容</nz-form-label>
+        <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+          <!--<nz-select name="select-error" formControlName="status" id="status" nzPlaceHolder="请选择状态">-->
+            <!--<nz-option *ngFor="let item of status" [nzValue]="item.value" [nzLabel]="item.key"></nz-option>-->
+          <!--</nz-select>-->
+          <textarea name="smsText" id="smsText" formControlName="smsText" class="textContent" placeholder="请输入内容"></textarea>
+          <nz-form-explain *ngIf="form.get('smsText').dirty && form.get('smsText').errors">内容不能为空</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+
+  </ng-template>
+
+  <ng-template #formFooter>
+    <button nz-button nzType="primary" (click)="make($event)" *ngIf="isEdit === false " [disabled]="!form.valid" >新增</button>
+    <button nz-button nzType="primary" (click)="save($event)" *ngIf="isEdit === true " [disabled]="!form.valid">保存</button>
+    <button nz-button nzType="default" (click)="formVisible = false">取消</button>
+  </ng-template>
+</nz-modal>

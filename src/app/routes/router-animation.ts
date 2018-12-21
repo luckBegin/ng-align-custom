@@ -31,3 +31,13 @@ export const fadeAnimation =
     ])
 
   ]);
+
+export const ngIfAnimation = trigger('ngIfAnimate', [
+  transition(':enter', [
+    style({opacity:0}),
+    animate(300, style({opacity:1}))
+  ]),
+  transition(':leave', [
+    animate(300, style({opacity:0}))
+  ])
+]);

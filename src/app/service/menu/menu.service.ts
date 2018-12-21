@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http' ;
 import { Observable } from 'rxjs' ;
 import { RESPONSE } from '../../models';
+import { API } from '../API';
 @Injectable({
   providedIn : "root"
 })
@@ -14,7 +15,7 @@ export class  MenuService {
     return new Observable( resolve => {
       const menu = [
         {
-          text: '主导航',
+          text: '短信',
           group: true,
           children: [
             {
@@ -23,18 +24,30 @@ export class  MenuService {
               icon: "anticon anticon-message"
             },
             {
-              text: '其他配置',
-              link: '/sms/config',
+              text: '短信发送',
+              link: '/sms/send',
               icon: "anticon anticon-message"
             }
           ]
-        },        {
-          text: '系统设置',
+        }, {
+          text: '系统配置',
           group: true,
           children: [
             {
-              text: '角色设置',
+              text: '部门设置',
+              link: '/system/depart',
+              icon: "anticon anticon-message"
+            },{
+              text: '角色管理',
               link: '/system/role',
+              icon: "anticon anticon-message"
+            },{
+              text: '菜单管理',
+              link: '/system/menu',
+              icon: "anticon anticon-message"
+            },{
+              text: '员工管理',
+              link: '/system/staff',
               icon: "anticon anticon-message"
             }
           ]
@@ -47,4 +60,11 @@ export class  MenuService {
       })
     });
   };
+
+  getAllmenu(){
+    const url = API.system.getLoginMenu ;
+
+    return this.http.get(url) ;
+  }
+
 };

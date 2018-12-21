@@ -86,7 +86,7 @@ import { LayoutModule } from './layout/layout.module';
   ],
   providers: [
     ...LANG_PROVIDES,
-    ...INTERCEPTOR_PROVIDES,
+    // ...INTERCEPTOR_PROVIDES,
     ...APPINIT_PROVIDES
   ],
   bootstrap: [AppComponent]
