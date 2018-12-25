@@ -9,7 +9,6 @@ import { AdaptorUtils } from '@shared/utils';
 import { ngIfAnimation } from '../../../routes/router-animation';
 import { Service } from '../../../../decorators/service.decorator';
 
-let _this ;
 @Component({
   selector : "sys-depart" ,
   templateUrl : "./depart.component.html",
@@ -27,7 +26,6 @@ export class DepartComponent implements OnInit{
 
   ngOnInit() : void{
     this.getList() ;
-    _this = this ;
   };
 
   departList : any[] = [] ;
@@ -53,14 +51,6 @@ export class DepartComponent implements OnInit{
 
   getList(){
     this.service.get()
-      .pipe(
-          filter( ( res : RESPONSE ) => {
-              if(res.success === false){
-                  this.msg.error("获取部门数据失败,原因:" + res.message) ;
-              };
-              return res.success === true ;
-          }),
-      )
       .subscribe( ( res : RESPONSE) => {
         this.departList = AdaptorUtils.makeTreeNode({title : 'name' , key : 'id' },res.data) ;
         this.loading = false ;

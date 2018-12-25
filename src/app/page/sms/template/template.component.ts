@@ -4,9 +4,9 @@ import { FormValid } from '../../../../decorators/formValid.decorator';
 import { Service } from '../../../../decorators/service.decorator';
 import { TemplateService, TemplateEnumService, TemplateModel } from '../../../service/sms';
 import { RESPONSE, ENUM } from '../../../models' ;
-import { SearchModel } from './search.model';
+import { QueryModel } from './query.model';
 import { filter, map } from 'rxjs/operators';
-import { DateUtils } from '../../../shared/utils';
+import { DateUtils, ObjectUtils } from '../../../shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchBarModel } from '@shared/component/search-bar/search-bar.model';
 @Component({
@@ -31,7 +31,7 @@ export class TemplateComponent implements OnInit{
 
   type: ENUM[] = [];
 
-  searchModel = new SearchModel();
+  searchModel = new QueryModel();
 
   selected: TemplateModel;
 
@@ -91,27 +91,15 @@ export class TemplateComponent implements OnInit{
   };
 
   searchBarData : SearchBarModel = {
-      btn: [{
-        name: '搜索',
-        type: 'search',
-        fn: () => {
-          this.getList();
-        },
-      }],
       conditions: [
-        {
-          name: '状态', type: 'select', data:this.type, placeHolder: '选择状态',change: ($event) => {
-            this.searchModel.status = $event;
-          }}, {
-          name: '类型', type: 'select', data: [], placeHolder: '选择类型', change: ($event) => {
-            this.searchModel.projectType = $event;
-          },
-        }, {
-          name: '创建时间', type: 'date', placeHolder: '选择创建时间', change: ($event) => {
-            this.searchModel.createTime = DateUtils.format($event, 'y-m-d');
-          },
-        },
+        { name: '状态', type: 'select', model : "status" , default : 'null' , data:[], placeHolder: '选择状态'},
+        { name: '类型', type: 'select',model : "type" , default : 'null' , data: [], placeHolder: '选择类型'},
+        { name: '创建时间', type: 'date' , model : 'createTime'  , format : "y-m-d" , placeHolder: '选择创建时间'},
       ],
+      notify : {
+        query : ( data : QueryModel ) => {  this.searchModel = ObjectUtils.extend(this.searchModel , data ) as QueryModel ; this.getList() } ,
+        reset : ( data : QueryModel ) => { this.searchModel = new QueryModel ; this.getList() }
+      }
   };
 
   pageChange(): void {
@@ -127,14 +115,6 @@ export class TemplateComponent implements OnInit{
   // 删除
   modalConfirm() {
     this.templateSer.delete(this.selected.id)
-      .pipe(
-        filter((res: RESPONSE) => {
-          if (res.success === false)
-            this.msg.error('删除失败,原因:' + res.message);
-
-          return res.success === true;
-        }),
-      )
       .subscribe(data => {
         this.isVisible = false;
       });
@@ -144,15 +124,6 @@ export class TemplateComponent implements OnInit{
   getList(): void {
     this.tableData.loading = true;
     this.templateSer.get(this.searchModel)
-      .pipe(
-        filter((res: RESPONSE) => {
-          if (res.success === false)
-            this.msg.error('获取数据失败,原因:' + res.message);
-
-          return res.success === true;
-        }),
-        map((res: RESPONSE) => res.data),
-      )
       .subscribe((data: TemplateModel[]) => {
         this.tableData.data = data;
         this.tableData.loading = false;
@@ -201,15 +172,6 @@ export class TemplateComponent implements OnInit{
   changeStatus(data: TemplateModel) {
     data.status = (<any>!data.status) * 1;
     this.templateSer.put(data)
-      .pipe(
-        filter((res: RESPONSE) => {
-          if (res.success === false) {
-            this.msg.error('修改状态失败,原因:' + res.message);
-            data.status = (<any>!data.status) * 1;
-          }
-          return res.success === true;
-        }),
-      )
       .subscribe(res => {
         this.msg.success('修改成功');
       });

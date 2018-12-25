@@ -13,6 +13,8 @@ import { ICONS } from '../../../style-icons';
 import { MenuService as menuSer } from '../../service' ;
 import { filter  , map } from 'rxjs/operators' ;
 import { RESPONSE } from '../../models' ;
+import { SysMenuService } from '../../service/system';
+import { LocalStorageService } from '../../service/storage';
 /**
  * 用于应用启动时
  * 一般用来获取应用所需要的基础数据等
@@ -28,21 +30,24 @@ export class StartupService {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
     private injector: Injector ,
-    private menuSer : menuSer
+    private menuSer : SysMenuService ,
+    private ls : LocalStorageService
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
   private viaHttp(resolve: any, reject: any) {
-    this.menuSer.get()
-      .pipe(
-        filter( ( res : RESPONSE )=> res.success === true ) ,
-        map( (res : RESPONSE) => res.data )
-      )
-      .subscribe( ( data : Object[] ) => {
-        this.menuService.add(data as any ) ;
-        resolve({});
-      });
+    // const usrId = this.ls.get("loginInfo")['id'] ;
+    // this.menuSer.getLoginMenu(usrId)
+    //   .pipe(
+    //     filter( ( res : RESPONSE )=> res.success === true ) ,
+    //     map( (res : RESPONSE) => res.data )
+    //   )
+    //   .subscribe( ( data : Object[] ) => {
+    //     console.log(data) ;
+    //     // this.menuService.add(data as any ) ;
+    //     resolve({});
+    //   });
     // zip(
     //   this.httpClient.get('assets/tmp/app-data.json')
     // ).pipe(
@@ -70,64 +75,8 @@ export class StartupService {
     // () => {
     //   resolve(null);
     // });
-  }
-  
-  private viaMock(resolve: any, reject: any) {
-    // const tokenData = this.tokenService.get();
-    // if (!tokenData.token) {
-    //   this.injector.get(Router).navigateByUrl('/passport/login');
-    //   resolve({});
-    //   return;
-    // }
-    // mock
-    const app: any = {
-      name: `ng-alain`,
-      description: `Ng-zorro admin panel front-end framework`
-    };
-    const user: any = {
-      name: 'Admin',
-      avatar: './assets/tmp/img/avatar.jpg',
-      email: 'cipchk@qq.com',
-      token: '123456789'
-    };
-    // 应用信息：包括站点名、描述、年份
-    this.settingService.setApp(app);
-    // 用户信息：包括姓名、头像、邮箱地址
-    this.settingService.setUser(user);
-    // ACL：设置权限为全量
-    this.aclService.setFull(true);
 
-    this.menuSer.get()
-      .pipe(
-        filter( ( res : RESPONSE )=> res.success === true ) ,
-        map( (res : RESPONSE) => res.data )
-      )
-      .subscribe( ( data : Object[] ) => {
-        console.log(data) ;
-      })
-    // 初始化菜单
-    this.menuService.add([
-      {
-        text: '主导航',
-        group: true,
-        children: [
-          {
-            text: '仪表盘',
-            link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' }
-          },
-          {
-            text: '快捷菜单',
-            icon: { type: 'icon', value: 'rocket' },
-            shortcutRoot: true
-          }
-        ]
-      }
-    ]);
-    // 设置页面标题的后缀
-    this.titleService.suffix = app.name;
-
-    resolve({});
+    resolve({}) ;
   }
 
   load(): Promise<any> {

@@ -5,7 +5,7 @@
       {{ SearchBarData.classify.name }} :
     </div>
     <div class="classify_tags c-flex-row-start">
-      <div class="tags" *ngFor="let item of SearchBarData.classify.data; let idx = index" (click)="classifyChange( item )">
+      <div class="tags" *ngFor="let item of SearchBarData.classify.data; let idx = index" >
         {{ item.name }}
       </div>
     </div>
@@ -23,7 +23,7 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <input #input nz-input [placeholder]="item.placeHolder" (change)="item.change(input.value)">
+            <input #input nz-input [(ngModel)]="query[item.model]" [placeholder]="item.placeHolder" >
           </div>
         </div>
 
@@ -35,8 +35,8 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <nz-select nzAllowClear style="width: 100%;" [ngModel]="'null'" [nzPlaceHolder]="item.placeHolder" (ngModelChange) = 'item.change($event)'>
-              <nz-option [nzValue]="'null'" [nzLabel]="'全部'"></nz-option>
+            <nz-select nzAllowClear style="width: 100%;" [(ngModel)]="query[item.model]" [nzPlaceHolder]="item.placeHolder" >
+              <nz-option [nzValue]="'null'" [nzLabel]="'全部'" ></nz-option>
               <nz-option *ngFor="let ops of item.data " [nzValue]="ops.value" [nzLabel]="ops.key" ></nz-option>
             </nz-select>
           </div>
@@ -50,10 +50,9 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <nz-date-picker nzAllowClear [(ngModel)]="item['date'] " [nzPlaceHolder] = 'item.placeHolder' (ngModelChange) = 'item.change($event)'></nz-date-picker>
+            <nz-date-picker nzAllowClear [(ngModel)]="query[item.model]" [nzPlaceHolder] = 'item.placeHolder'></nz-date-picker>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -78,30 +77,26 @@
   </div>
 
   <!-- btn -->
-  <div *ngIf = 'SearchBarData.btn'>
+  <div>
     <div class="btnWrap c-flex-row-start">
-      <div *ngFor="let item of SearchBarData.btn">
 
-        <button
-          *ngIf="item.type === 'search' "
-          nz-button
-          nzType="primary"
-          (click)="item.fn()"
-        >
-          <i class="anticon anticon-search"></i>
-          {{ item.name }}
-        </button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="queryFn()"
+      >
+        <i class="anticon anticon-search"></i>
+        搜索
+      </button>
 
-        <button
-          *ngIf="item.type === 'reset' "
-          nz-button
-          nzType="default"
-          (click)="item.fn()"
-        >
-          <i nz-icon type="cloud" theme="outline"></i>
-          {{ item.name }}
-        </button>
-      </div>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="reset()"
+      >
+        <i class="anticon anticon-search"></i>
+        重置
+      </button>
     </div>
   </div>
 </div>

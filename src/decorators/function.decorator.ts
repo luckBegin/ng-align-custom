@@ -12,6 +12,7 @@ const recursiveCall = function(arr : Array< Function > , args){
                 .subscribe(
                     res => {
                         arr.shift() ;
+                        args.push(res) ;
                         recursiveCall.call(this , arr  , args) ;
                     }
                 )

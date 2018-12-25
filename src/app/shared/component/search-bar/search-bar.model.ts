@@ -12,16 +12,17 @@ interface btnModel{
 
 interface sectionModel {
   name ?: string ,
-  names ?: string[] ,
   type : "input" | "select" | "date" | "dateRange" ,
   data? : any[] ,
   placeHolder? : string ,
-  placeHolders? : string[],
-  change : any
+  default ?: string ;
+  model ?: string ;
+  format ?: string ;
 }
 export interface SearchBarModel {
   classify ?: classifyModel ;
   btn ?: btnModel[] ,
   sections ?: sectionModel[] ,
-  conditions ?: sectionModel[]
+  conditions ?: sectionModel[] ,
+  notify ?: { query : Function , reset : Function }
 }

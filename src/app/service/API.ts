@@ -1,5 +1,4 @@
-const host : string = 'http://10.0.40.24:8303' ;
-
+const host : string = 'http://g3app-pre.pandafintech.com.br' ;
 const template = {
   template : {
     query : host + "/smsTemplate/query" ,

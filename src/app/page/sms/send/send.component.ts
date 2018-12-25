@@ -13,11 +13,12 @@ import {
 import { RESPONSE , ENUM } from '../../../models' ;
 import { SearchModel } from "./search.model";
 import { filter, map } from "rxjs/operators";
-import { DateUtils, RegUtils } from "../../../shared/utils";
+import { DateUtils, ObjectUtils, RegUtils } from '../../../shared/utils';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { combineLatest, Observable } from "rxjs" ;
 import { Before, CombineAll } from "../../../../decorators/function.decorator";
 import { ngIfAnimation } from '../../../routes/router-animation';
+import { SearchBarModel } from '@shared/component/search-bar/search-bar.model';
 @Component({
   selector: "Sms-send",
   templateUrl: "./send.component.html",
@@ -73,36 +74,30 @@ export class SendComponent implements OnInit {
     data: []
   };
 
-  searchBarData = {
-    btn: [{
-      name: "搜索",
-      type: "search",
-      fn: () => {
-      },
-    }],
+  searchBarData : SearchBarModel = {
     conditions: [
-      {
-        name: "状态", type: "select", data: [] ,  placeHolder: "选择状态", change: ($event) => {
-          this.searchModel.status = $event ;
-        },
-      }, {
-        name: "类型", type: "select", data: [], placeHolder: "选择类型", change: ($event) => {
-          this.searchModel.projectType = $event ;
-        },
-      }, {
-        name: "创建时间", type: "date", placeHolder: "选择创建时间", change: ($event) => {
-          this.searchModel.createTime = DateUtils.format($event , 'y-m-d') ;
-        },
-      },
+      { name: "状态", type: "select", data: [] , model : "status" , default : 'null' , placeHolder: "选择状态", } ,
+      { name: "类型", type: "select", data: [], model : "projectType" , default : 'null' ,  placeHolder: "选择类型", },
+      { name: "创建时间", type: "date" , model : "createTime" , format : 'y-m-d', placeHolder: "选择创建时间" },
     ],
+    notify : {
+      query : ( data : SearchModel ) => { this.searchModel = ObjectUtils.extend(this.searchModel , data) as SearchModel ; this.getList() } ,
+      reset : ( data : SearchModel ) => { this.searchModel = new SearchModel ; this.getList() }
+    }
   };
 
   type : ENUM[] = [] ;
+
   status : ENUM[] = [] ;
+
   channelType : ENUM[] = [] ;
+
   sendType : ENUM[] = [] ;
+
   sendStatus : ENUM[] = [] ;
+
   templateENUM : ENUM[] = [] ;
+
   pageChange(): void {
     this.getList() ;
   };
@@ -206,8 +201,4 @@ export class SendComponent implements OnInit {
         this.formVisible = false ;
       }) ;
   };
-
-  getTemplate(){
-    // this.templateSer.get({  currentPage : " null" , pageSize : "null "})
-  }
 };

@@ -82,7 +82,8 @@ import { SettingDrawerComponent } from './setting-drawer/setting-drawer.componen
     ::ng-deep router-outlet ~ * {
       position: absolute;
       width: 100%;
-      padding-bottom: 60px
+      padding-bottom: 60px;
+      height: 100%;
     }
   `]
 })

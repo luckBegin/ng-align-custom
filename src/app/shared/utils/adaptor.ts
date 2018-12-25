@@ -6,16 +6,25 @@ class TreeNodes {
   title : string ;
   key : number ;
   children : TreeNodes[] = [] ;
-
-  constructor(title : string , key : number){
+  parentNode : TreeNodes ;
+  constructor(title : string , key : number , parent : TreeNodes ){
     this.title = title ;
     this.key = key ;
+    this.parentNode = parent ;
   };
+
+  getParentNode(){
+    return this.parentNode ;
+  };
+
+  getChildren(){
+    return this.children ;
+  }
 };
 
-const recursive = function(target : any[] , data : any[] , map : { title : string , key : string | number } ){
+const recursive = function(target : any[] , data : any[] , map : { title : string , key : string | number } , parent = null ){
   data.forEach( item => {
-    let _obj = new TreeNodes( item[map['title'] ] , item[map['key'] ]) ;
+    let _obj = new TreeNodes( item[map['title'] ] , item[map['key'] ] , parent ) ;
     target.push(_obj) ;
 
     Object.keys(item).forEach( ( key ) => {
@@ -23,7 +32,7 @@ const recursive = function(target : any[] , data : any[] , map : { title : strin
         _obj[key] = item[key] ;
     });
     if(item.children)
-      recursive(_obj.children , item.children , map ) ;
+      recursive(_obj.children , item.children , map , item ) ;
   });
 };
 export const AdaptorUtils = {

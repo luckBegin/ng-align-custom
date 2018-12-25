@@ -14,4 +14,62 @@
     <!--</ul>-->
   <!--</nz-dropdown>-->
   <sidebar-nav class="d-block py-lg"></sidebar-nav>
+  <!--<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" class="sideMenu">-->
+    <!--<div *ngFor = 'let items of menu'>-->
+      <!--<li-->
+        <!--nz-menu-item-->
+        <!--*ngIf = 'items.children.length === 0'-->
+        <!--(click) = 'urlLink(items)'-->
+      <!--&gt;-->
+			<!--<span title>-->
+          <!--<i class="anticon anticon-appstore"></i>-->
+				<!--<span>{{ items.menuDescriptions[0].description }}</span>-->
+			<!--</span>-->
+      <!--</li>-->
+
+      <!--<li-->
+        <!--nz-submenu-->
+        <!--*ngIf = 'items.children.length > 0'-->
+      <!--&gt;-->
+			<!--<span title>-->
+          <!--<i class="anticon anticon-appstore"></i>-->
+				<!--<span>{{items.menuDescriptions[0].description}}</span>-->
+			<!--</span>-->
+        <!--<ul >-->
+          <!--<div *ngFor = 'let item of items.children'>-->
+            <!--<li-->
+              <!--nz-menu-item-->
+              <!--(click) = 'urlLink(item)'-->
+              <!--*ngIf = 'item.children.length === 0'-->
+            <!--&gt;-->
+              <!--{{item.menuDescriptions[0].description}}-->
+            <!--</li>-->
+            <!--<li-->
+              <!--nz-submenu-->
+              <!--*ngIf = 'item.children.length > 0'-->
+              <!--style="padding: 0"-->
+            <!--&gt;-->
+						<!--<span title>-->
+              <!--<i class="anticon anticon-appstore"></i>-->
+							<!--<span>-->
+								<!--{{item.menuDescriptions[0].description}}-->
+							<!--</span>-->
+						<!--</span>-->
+              <!--<ul>-->
+                <!--<li-->
+                  <!--nz-menu-item-->
+                  <!--(click) = 'urlLink(item2)'-->
+                  <!--*ngFor = 'let item2 of item.children'-->
+                  <!--style="padding: 0"-->
+                <!--&gt;-->
+                  <!--<i class="anticon anticon-appstore"></i>-->
+                  <!--{{item2.menuDescriptions[0].description}}-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</li>-->
+          <!--</div>-->
+        <!--</ul>-->
+      <!--</li>-->
+    <!--</div>-->
+  <!--</ul>-->
 </div>
