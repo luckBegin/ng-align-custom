@@ -27,7 +27,7 @@ export class StaffService{
     })
   };
 
-  @PUT(API.system.staff , true)
+  @PUT(API.system.staff)
   put(data: object){};
 
   post(data: object){

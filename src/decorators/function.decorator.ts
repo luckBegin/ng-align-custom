@@ -35,7 +35,7 @@ export function Before( fncName : string | Function ) : MethodDecorator {
             return ;
 
         if(fncName instanceof  Function){
-            fnc.__beforeCache.push(fncName)
+            fnc.__beforeCache.unshift(fncName)
         };
     };
 };
@@ -55,7 +55,7 @@ export function After( fncName : string | Function ) : MethodDecorator {
             return ;
 
         if(fncName instanceof  Function){
-            fnc.__afterCache.push(fncName) ;
+            fnc.__afterCache.unshift(fncName) ;
         };
     };
 };
@@ -71,17 +71,14 @@ export function CombineAll() : MethodDecorator {
             let beforeFn , afterFn , _arr = [] ;
 
             if(fnc['__beforeCache']){
-                beforeFn = fnc['__beforeCache'].reverse() ;
-                _arr = _arr.concat(beforeFn) ;
+                beforeFn = fnc['__beforeCache'] ;
+                _arr = _arr.concat(beforeFn);
             };
-
             _arr.push(raw) ;
-
             if(fnc['__afterCache']){
-                afterFn = fnc['__afterCache'].reverse() ;
+                afterFn = fnc['__afterCache'] ;
                 _arr = _arr.concat(afterFn);
             };
-
             recursiveCall.call(this , _arr , args ) ;
         };
     };

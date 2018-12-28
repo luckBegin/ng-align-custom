@@ -1,17 +1,5 @@
-const host : string = 'http://g3app-pre.pandafintech.com.br' ;
-const template = {
-  template : {
-    query : host + "/smsTemplate/query" ,
-    delete : host + "/smsTemplate/delete/" ,
-    post : host +"/smsTemplate/save" ,
-    put : host + "/smsTemplate/update"
-  },
-  send : {
-    query : host + "/smsHistory/query" ,
-    signle : host + "/smsSend/single" ,
-    multi : host + "/smsSend/multi"
-  }
-};
+import { environment } from '../../environments/environment' ;
+const host : string = environment.host ;
 const system = {
   depart : {
     list : host + "/department/tree" ,
@@ -24,6 +12,5 @@ const system = {
   staff : host + "/employee" ,
 };
 export const API = {
-  template : template ,
   system : system
 };

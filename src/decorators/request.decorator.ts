@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RESPONSE } from '../app/models';
 import { HttpHeaders } from '@angular/common/http';
-export function GET( url : string , prevent : boolean = true , msg : string = '获取数据失败,原因 : ') : MethodDecorator {
+export function GET( url : string ,msg : string = '获取数据失败,原因 : ') : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
     descriptor.value = function( ...arg ){
@@ -14,16 +14,12 @@ export function GET( url : string , prevent : boolean = true , msg : string = '�
         })
           .pipe(
             filter( (res : RESPONSE) => {
-
               if(res.success === false ){
                 this.msg.error(msg + res.message) ;
-              };
-              if(prevent !== true ){
-                obsr.next(res) ;
+                obsr.error(res) ;
               };
               return res.success === true ;
             }),
-            map( (res : RESPONSE) => res.data)
           )
           .subscribe( res => {
             obsr.next(res) ;
@@ -33,7 +29,7 @@ export function GET( url : string , prevent : boolean = true , msg : string = '�
   };
 };
 
-export function POST( url : string , prevent : boolean = true , msg : string = '提交失败,原因 : ' , json : boolean = true ) : MethodDecorator {
+export function POST( url : string  , json : boolean = true , msg : string = '提交失败,原因 : ') : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
     descriptor.value = function( ...arg ){
@@ -51,13 +47,10 @@ export function POST( url : string , prevent : boolean = true , msg : string = '
 
               if(res.success === false ){
                 this.msg.error(msg + res.message) ;
-              };
-              if(prevent !== true ){
-                obsr.next(res) ;
+                obsr.error(res) ;
               };
               return res.success === true ;
             }),
-            map( (res : RESPONSE) => res.data)
           )
           .subscribe( res => {
             obsr.next(res) ;
@@ -68,7 +61,7 @@ export function POST( url : string , prevent : boolean = true , msg : string = '
 };
 
 
-export function PUT( url : string , prevent : boolean = true ,  msg : string = '保存失败,原因 : ' , json : boolean = true ) : MethodDecorator {
+export function PUT( url : string , msg : string = '保存失败,原因 : ' , json : boolean = true ) : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
     descriptor.value = function( ...arg ){
@@ -85,13 +78,10 @@ export function PUT( url : string , prevent : boolean = true ,  msg : string = '
 
               if(res.success === false ){
                 this.msg.error(msg + res.message) ;
-              };
-              if(prevent !== true ){
-                obsr.next(res) ;
+                obsr.error(res) ;
               };
               return res.success === true ;
             }),
-            map( (res : RESPONSE) => res.data)
           )
           .subscribe( res => {
             obsr.next(res) ;
@@ -101,24 +91,22 @@ export function PUT( url : string , prevent : boolean = true ,  msg : string = '
   };
 };
 
-export function DELETE( url : string , prevent : boolean = true , msg : string = '删除失败,原因 : ' ) : MethodDecorator {
+export function DELETE( url : string ,  msg : string = '删除失败,原因 : ' ) : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
     descriptor.value = function( ...arg ){
       return new Observable( obsr => {
+        console.log(arg) ;
         this.http.delete(url + "/" + arg[0].id)
           .pipe(
             filter( (res : RESPONSE) => {
 
               if(res.success === false ){
                 this.msg.error(msg + res.message) ;
-              };
-              if(prevent !== true ){
-                obsr.next(res) ;
+                obsr.error(res) ;
               };
               return res.success === true ;
             }),
-            map( (res : RESPONSE) => res.data)
           )
           .subscribe( res => {
             obsr.next(res) ;

@@ -98,21 +98,21 @@ export class DepartComponent implements OnInit{
 
   currentItem : any = {} ;
 
-  @Service("service.delete" , true ,'validateForm' )
+  @Service("service.delete" , true , () => this.validateForm.value )
   modalConfirm($event){
     this.msg.success("删除成功") ;
     this.isVisible = false ;
     this.getList() ;
   };
 
-  @Service("service.post" , true , 'validateForm')
+  @Service("service.post" , true , () => this.validateForm.value )
   makeNew($event : Event){
     this.msg.success("新建部门成功")
     this.infoBoxShow = false ;
     this.getList() ;
   };
 
-  @Service("service.put" , true , 'validateForm')
+  @Service("service.put" , true , () => this.validateForm.value )
   save($event){
     this.msg.success("部门修改成功") ;
     this.infoBoxShow = false ;

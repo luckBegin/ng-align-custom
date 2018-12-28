@@ -43,7 +43,10 @@ export class HttpIntercept implements HttpInterceptor {
             this.msg.error("登录失效,请重新登录") ;
             this.router.navigate(['/passport/login']) ;
           };
-
+          if(err.status === 302){
+            this.msg.error("登录失效,请重新登录") ;
+            this.router.navigate(['/passport/login']) ;
+          };
           if(err.status === 500 ){
             this.msg.error("服务器挂了,请联系开发") ;
             this.router.navigate(['/500']) ;
@@ -58,7 +61,6 @@ export class HttpIntercept implements HttpInterceptor {
             this.msg.error("管理员告诉我你没权限访问这个") ;
             this.router.navigate(['/403']) ;
           };
-
           return throwError(err) ;
         })
       )

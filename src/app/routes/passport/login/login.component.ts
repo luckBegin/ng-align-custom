@@ -46,10 +46,10 @@ export class UserLoginComponent implements OnDestroy {
     private ss : SesssionStorageService
   ) {
     this.form = fb.group({
-      userName: [null, [Validators.required, Validators.minLength(5)]],
+      userName: [null, [ Validators.required ]],
       password: [null, Validators.required],
-      mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      captcha: [null, [Validators.required]],
+      mobile: [null, [ Validators.required, Validators.pattern(/^1\d{10}$/)]],
+      captcha: [null, [ Validators.required ] ],
       remember: [true],
     });
     modalSrv.closeAll();
@@ -98,6 +98,7 @@ export class UserLoginComponent implements OnDestroy {
 
   submit() {
     this.error = '';
+
     if (this.type === 0) {
       this.userName.markAsDirty();
       this.userName.updateValueAndValidity();

@@ -43,15 +43,15 @@ import { StaffService } from '../../../../service/system';
         <nz-form-item class='c-formSec'>
           <nz-form-label [nzSm]="9" nzRequired nzFor="projectType">输入新密码</nz-form-label>
           <nz-form-control [nzSm]="14"  [nzOffset]='1'>
-            <input nz-input formControlName="password" type="password" id="password" placeholder="请输入新密码">
+            <input nz-input formControlName="password" id="password" placeholder="请输入新密码">
             <nz-form-explain *ngIf="form.get('password').dirty && form.get('password').errors">新密码不能为空</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item class='c-formSec'>
-          <nz-form-label [nzSm]="9" nzRequired nzFor="projectType">再次输入新密码</nz-form-label>
+          <nz-form-label [nzSm]="9" nzRequired nzFor="passwordAgain">再次输入新密码</nz-form-label>
           <nz-form-control [nzSm]="14"  [nzOffset]='1'>
-            <input nz-input formControlName="passwordAgain" type="password" id="passwordAgain" placeholder="请再次输入新密码">
+            <input nz-input formControlName="passwordAgain" id="passwordAgain" placeholder="请再次输入新密码">
             <nz-form-explain *ngIf="form.get('passwordAgain').dirty && form.get('passwordAgain').errors">新密码不能为空</nz-form-explain>
           </nz-form-control>
         </nz-form-item>

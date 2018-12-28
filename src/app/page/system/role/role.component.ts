@@ -130,7 +130,7 @@ export class RoleComponent implements OnInit {
       });
   }
 
-  @Service('service.delete', true, 'form')
+  @Service('service.delete', true, () => this.form.value)
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;

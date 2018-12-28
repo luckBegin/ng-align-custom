@@ -8,10 +8,12 @@
       #TableDatas
       nzShowSizeChanger nzShowQuickJumper nzShowTotal
       [nzData]="TableData.data"
-      (nzPageIndexChange) = 'pageChange("page",$event)'
-      (nzPageSizeChange) = 'pageChange("size",$event)'
+      (nzPageIndexChange) = 'pageChange("page" , $event)'
+      (nzPageSizeChange) = 'pageChange("size" , $event)'
       [nzLoading] = 'TableData.loading'
       [nzPageIndex] = 'TableData.page'
+      [nzFrontPagination] = 'false'
+      [nzTotal] = "TableData.total"
     >
       <thead>
         <tr>

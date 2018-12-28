@@ -1,14 +1,18 @@
 class DateDeal {
-
   static isDateStr( timeStamp: string ): boolean {
     const reg = /^\d{4}-\d{2}-\d{2}$/g ;
 
     return reg.test(timeStamp) ;
   };
 
-  static transtoTimeStamp = function( dataStr :string | number ){
-    return DateDeal.isDateStr( dataStr as string )
-      ? new Date(dataStr) : dataStr ;
+  static transtoTimeStamp = function( dataStr :string | number | Date ){
+    if( DateDeal.isDateStr( dataStr as string ))
+      return (new Date(dataStr)).getTime()
+
+    if(dataStr instanceof Date)
+      return dataStr.getTime() ;
+
+    return dataStr ;
   };
 
   static fixZero(str: any) {
@@ -24,6 +28,8 @@ class DateDeal {
     const _stamp = Date.now();
     return timeStamp ? _stamp : this.format(_stamp, format);
   };
+
+  toTimeStamp = DateDeal.transtoTimeStamp ;
 
   format(dateStr: any, format: string = 'y-m-d h:i:s') {
 

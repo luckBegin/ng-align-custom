@@ -86,9 +86,12 @@
   width: 100%;
 }
 ::ng-deep .ant-table-thead > tr > th{
-  text-align: center !important;
+  text-align: center !important ;
+  white-space: nowrap ;
 }
-
+::ng-deep .ant-table-tbody > tr > td{
+  white-space: nowrap ;
+}
 .loading{
   position: absolute;
   width: 100%;
@@ -99,10 +102,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px 0px;
+  padding: 20px 0;
   box-sizing: border-box;
 }
-@media screen and (max-width: 960px){
+
+@media screen and (max-width: 960px) {
   .table_title{
     display: block;
     margin-right: 5px;
@@ -126,6 +130,7 @@
   ::ng-deep .ant-table-tbody > tr > td{
     padding-left : 20px;
     padding-bottom : 10px;
+    white-space : normal ;
   }
   .tableWrap{
     background: none ;

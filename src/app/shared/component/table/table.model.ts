@@ -19,4 +19,6 @@ export interface TableData{
     loading ?: boolean ;
     btn ?: btnGroup ;
     page : number  ;
+    change ?: Function ;
+    total ?: number ;
 };

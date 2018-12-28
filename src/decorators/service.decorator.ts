@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { RESPONSE } from '../app/models';
 import { filter} from 'rxjs/operators';
 
-export function Service( serviceName : string , prevent : boolean ,  data? : string | Object ){
+export function Service( serviceName : string , prevent : boolean ,  data : Function ){
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ){
     if(!/\w+.\w+/g.test(serviceName)){
       throw new Error("Invalid Service call ")
@@ -16,12 +16,10 @@ export function Service( serviceName : string , prevent : boolean ,  data? : str
 
       const service = serviceName.split(".") ;
 
-      let _data = null ;
+      let _data = data.call(this);
 
-      if(typeof data === 'string')
-        _data = this[data].value ;
-      if(typeof data === 'object' )
-        _data = data ;
+      if(_data === false)
+        return ;
 
       ( < Observable <RESPONSE> >this[service[0]][service[1]](_data) )
         .pipe(

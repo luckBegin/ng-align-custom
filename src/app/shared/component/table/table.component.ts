@@ -31,9 +31,6 @@ export class TableComponent implements OnInit{
   };
 
   pageChange(type : string , number : number){
-    this.change.emit({
-      type :type ,
-      number : number
-    });
+    this.TableData.change(type , number ) ;
   };
 };

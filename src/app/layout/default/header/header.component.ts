@@ -24,7 +24,7 @@ export class HeaderComponent{
   };
 
   weekColor(){
-    const bodyEle = document.querySelector('#root') as HTMLDivElement ;
+    const bodyEle = document.querySelector('body') as HTMLBodyElement ;
     const reg = /^weekColor$/g ;
     if(reg.test(bodyEle.className)){
       bodyEle.className = '' ;

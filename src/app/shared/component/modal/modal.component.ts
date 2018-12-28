@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -18,8 +18,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     </ng-template>
 
     <ng-template #modalFooter>
-      <button *ngIf="cancel" nz-button nzType="default" (click)="isVisible = false">取消</button>
-      <button nz-button nzType="primary" (click)="handleOk()">确定</button>
+      <button nz-button nzType="default" (click)="handle('cancel')">取消</button>
+      <button nz-button nzType="primary" (click)="handle('confirm')">确定</button>
     </ng-template>
     
   </nz-modal>` ,
@@ -39,15 +39,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     }
   `]
 })
-export class ModalComponent {
+export class ModalComponent{
   constructor(){} ;
+
   @Input() isVisible : boolean = false ;
+
   @Input() title : string = '提示' ;
+
   @Input() body : string = "确认操作?" ;
+
   @Input() type : "success" | "error" | "warn" = 'success' ;
-  @Input() cancel : boolean = true ;
+
   @Output() confirm  : EventEmitter<any> = new EventEmitter();
-  handleOk() : void{
-    this.confirm.emit() ;
+
+  @Input() cancel : EventEmitter<any> = new EventEmitter() ;
+
+
+  handle(type : string ) : void{
+    type === 'confirm' ?
+      this.confirm.emit()  : this.cancel.emit() ;
   };
 }

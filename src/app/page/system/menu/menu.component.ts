@@ -19,9 +19,7 @@ export class MenuComponent implements OnInit {
     private service: SysMenuService,
     private msg: MsgService,
     private fb: FormBuilder,
-  ) {
-
-  } ;
+  ){};
 
   ngOnInit(): void {
     this.getList();
@@ -120,21 +118,21 @@ export class MenuComponent implements OnInit {
     this.currentItem = $event.node;
   };s
 
-  @Service('service.delete', true, 'validateForm')
+  @Service('service.delete', true,() => this.validateForm.value )
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;
     this.getList();
   };
 
-  @Service('service.post', true, 'validateForm')
+  @Service('service.post', true, () => this.validateForm.value )
   makeNew($event: Event): void {
     this.msg.success("新建菜单成功")
     this.infoBoxShow = false ;
     this.getList() ;
   };
 
-  @Service('service.put', true, 'validateForm')
+  @Service('service.put', true, () => this.validateForm.value )
   save($event: Event): void {
     this.msg.success("修改成功")
     this.infoBoxShow = false ;

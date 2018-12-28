@@ -15,9 +15,11 @@ interface sectionModel {
   type : "input" | "select" | "date" | "dateRange" ,
   data? : any[] ,
   placeHolder? : string ,
+  placeHolders? : string[] ,
   default ?: string ;
   model ?: string ;
   format ?: string ;
+
 }
 export interface SearchBarModel {
   classify ?: classifyModel ;

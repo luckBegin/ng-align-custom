@@ -23,7 +23,29 @@
             </span>:
           </div>
           <div class="c-flex-row-start" style="flex:1">
-            <input #input nz-input [(ngModel)]="query[item.model]" [placeholder]="item.placeHolder" >
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input type="text" nz-input [(ngModel)]="query[item.model]" [placeholder]="item.placeHolder" >
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+              <i nz-icon type="search"></i>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- number -->
+        <div *ngIf="item.type === 'number'" class="c-flex-row-start">
+          <div class="searchTitle">
+            <span>
+              {{ item.name }}
+            </span>:
+          </div>
+          <div class="c-flex-row-start" style="flex:1">
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input type="number" nz-input [(ngModel)]="query[item.model]" [placeholder]="item.placeHolder" >
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+              <i nz-icon type="search"></i>
+            </ng-template>
           </div>
         </div>
 
@@ -68,9 +90,9 @@
               {{ item.name }} :
             </span>
           </div>
-          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['start'] " [nzPlaceHolder] = 'item.placeHolders[0]' (ngModelChange) = 'item.change($event , "start")'></nz-date-picker>
+          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['start'] " [nzPlaceHolder] = 'item.placeHolders[0]'></nz-date-picker>
           <div class="splitLine"> - </div>
-          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['end'] " [nzPlaceHolder] = 'item.placeHolders[1]' (ngModelChange) = 'item.change($event , "end")'></nz-date-picker>
+          <nz-date-picker nzAllowClear class="dateTime" [(ngModel)]="item['end'] " [nzPlaceHolder] = 'item.placeHolders[1]' ></nz-date-picker>
         </div>
       </div>
     </div>

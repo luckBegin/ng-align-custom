@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MsgService } from '../../../service/msg/msg.service';
 import { StaffService } from '../../../service/system/staff.service';
-import { MenuService } from '../../../service/menu';
 import { QueryModel } from './query.model';
 import { ENUM, RESPONSE } from '../../../models';
-import { filter } from 'rxjs/operators';
-import { AdaptorUtils, DateUtils, ObjectUtils } from '@shared/utils';
-import { $e } from 'codelyzer/angular/styles/chars';
+import { AdaptorUtils , ObjectUtils } from '@shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Service } from '../../../../decorators/service.decorator';
-import { DepartService, RoleService } from '../../../service/system';
+import { DepartService, RoleService  , SysMenuService} from '../../../service/system';
 import { NzTreeComponent } from 'ng-zorro-antd';
 import { Before, CombineAll } from '../../../../decorators/function.decorator';
 import { Observable } from 'rxjs';
@@ -23,7 +20,7 @@ export class StaffComponent implements OnInit {
   constructor(
     private msg: MsgService,
     private service: StaffService,
-    private menu: MenuService,
+    private menu: SysMenuService,
     private departSer: DepartService,
     private roleSer: RoleService,
     private fb: FormBuilder,
@@ -133,7 +130,7 @@ export class StaffComponent implements OnInit {
     this.form.reset();
   };
 
-  @Service('service.delete', true, 'form')
+  @Service('service.delete', true, () => this.form.value )
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;
@@ -182,8 +179,7 @@ export class StaffComponent implements OnInit {
     if (selectKeys.length === 0) {
       this.msg.warn('未选择部门');
       return;
-    }
-    ;
+    };
 
     return new Observable(obsr => {
       const _arr = [];
@@ -252,6 +248,5 @@ const selectId = function(arr: any[], tar: string[]) {
     if (item.children.length > 0) {
       selectId(item.children, tar);
     }
-    ;
   });
 };
