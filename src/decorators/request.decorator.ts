@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RESPONSE } from '../app/models';
 import { HttpHeaders } from '@angular/common/http';
+import { url } from 'inspector';
 export function GET( url : string ,msg : string = '获取数据失败,原因 : ') : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
@@ -61,7 +62,7 @@ export function POST( url : string  , json : boolean = true , msg : string = '�
 };
 
 
-export function PUT( url : string , msg : string = '保存失败,原因 : ' , json : boolean = true ) : MethodDecorator {
+export function PUT( url : string  , withId : boolean = false , msg : string = '保存失败,原因 : ' , json : boolean = true ) : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
     descriptor.value = function( ...arg ){
@@ -70,7 +71,8 @@ export function PUT( url : string , msg : string = '保存失败,原因 : ' , js
         headers.append("Content-type" , "application/json") ;
 
       return new Observable( obsr => {
-        this.http.put(url , arg[0] , {
+        const _url = withId ? url + arg[0]['id'] : url ;
+        this.http.put( _url , arg[0] , {
           headers : headers
         })
           .pipe(

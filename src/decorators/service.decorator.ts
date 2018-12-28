@@ -27,8 +27,6 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
 
             args.push( res ) ;
 
-            el.disabled = false ;
-
             if(prevent === false && res.success === false ){
                 raw.apply(this , args) ;
             };
@@ -42,6 +40,8 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
         )
         .subscribe( ( data : any ) => {
           raw.apply(this , args) ;
+        } , err => {
+          el.disabled = false ;
         });
     }
   };

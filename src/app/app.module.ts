@@ -14,7 +14,6 @@ const LANG = {
   zorro: zorroLang,
   delon: delonLang,
 };
-// register angular
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(LANG.ng, LANG.abbr);
 const LANG_PROVIDES = [
@@ -23,8 +22,6 @@ const LANG_PROVIDES = [
   { provide: DELON_LOCALE, useValue: LANG.delon },
 ];
 // #endregion
-
-// #region JSON Schema form (using @delon/form)
 import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
 const FORM_MODULES = [ JsonSchemaModule ];
 // #endregion
@@ -60,7 +57,6 @@ const APPINIT_PROVIDES = [
   }
 ];
 // #endregion
-
 import { DelonModule } from './delon.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
