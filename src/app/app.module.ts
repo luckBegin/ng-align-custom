@@ -1,5 +1,5 @@
-import { NgModule, LOCALE_ID, APP_INITIALIZER, Injector } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -67,6 +67,8 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc';
+import { RouteReuseStrategy } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,12 @@ import { LayoutModule } from './layout/layout.module';
   providers: [
     ...LANG_PROVIDES,
     // ...INTERCEPTOR_PROVIDES,
-    ...APPINIT_PROVIDES
+    ...APPINIT_PROVIDES ,
+    {
+      provide: RouteReuseStrategy,
+      useClass: ReuseTabStrategy,
+      deps: [ReuseTabService],
+    }
   ],
   bootstrap: [AppComponent]
 })

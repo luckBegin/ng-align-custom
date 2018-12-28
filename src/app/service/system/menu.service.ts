@@ -541,90 +541,6 @@ export class SysMenuService {
             ],
             "controllerIds":null,
             "isAuth":null
-          },{
-            "id":11,
-            "createTime":1530189316000,
-            "modifyTime":1530196529000,
-            "createOperatorId":null,
-            "modifyOperatorId":3,
-            "modifyOperatorName":null,
-            "parentId":null,
-            "url":"/system",
-            "isButton":0,
-            "buttonKey":null,
-            "iconPath":"anticon anticon-bars",
-            "enabled":1,
-            "menuDescriptions":[
-              {
-                "id":269,
-                "createTime":1535957388000,
-                "modifyTime":null,
-                "createOperatorId":3,
-                "modifyOperatorId":null,
-                "modifyOperatorName":null,
-                "menuId":11,
-                "locale":"zh_CN",
-                "description":"短信模板",
-                "enabled":1
-              }
-            ],
-            "children":[
-              {
-                "id":11,
-                "createTime":1530189316000,
-                "modifyTime":1530196529000,
-                "createOperatorId":null,
-                "modifyOperatorId":3,
-                "modifyOperatorName":null,
-                "parentId":null,
-                "url":"/sms/template",
-                "isButton":0,
-                "buttonKey":null,
-                "iconPath":"anticon anticon-bars",
-                "enabled":1,
-                "menuDescriptions":[
-                  {
-                    "id":269,
-                    "createTime":1535957388000,
-                    "modifyTime":null,
-                    "createOperatorId":3,
-                    "modifyOperatorId":null,
-                    "modifyOperatorName":null,
-                    "menuId":11,
-                    "locale":"zh_CN",
-                    "description":"模板配置",
-                    "enabled":1
-                  }
-                ]
-              },{
-                "id":11,
-                "createTime":1530189316000,
-                "modifyTime":1530196529000,
-                "createOperatorId":null,
-                "modifyOperatorId":3,
-                "modifyOperatorName":null,
-                "parentId":null,
-                "url":"/sms/send",
-                "isButton":0,
-                "buttonKey":null,
-                "iconPath":"anticon anticon-bars",
-                "enabled":1,
-                "menuDescriptions":[
-                  {
-                    "id":269,
-                    "createTime":1535957388000,
-                    "modifyTime":null,
-                    "createOperatorId":3,
-                    "modifyOperatorId":null,
-                    "modifyOperatorName":null,
-                    "menuId":11,
-                    "locale":"zh_CN",
-                    "description":"发送短信",
-                    "enabled":1
-                  }
-                ]
-              }
-            ]
           }
         ],
         "message":null,
@@ -632,12 +548,9 @@ export class SysMenuService {
       });
     });
   };
-
   getAllmenu() {
     // const url = API.system.getLoginMenu ;
-    //
     // return this.http.get(url) ;
-
     return new Observable(obsr => {
       setTimeout(() => {
         obsr.next({

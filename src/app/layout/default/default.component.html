@@ -3,6 +3,8 @@
 <layout-sidebar class="alain-default__aside"></layout-sidebar>
 <section class="alain-default__content" [@fadeAnimation]="getRouterOutletState(o)">
   <div>
+    <!-- 路由复用组件 -->
+    <!--<reuse-tab></reuse-tab>-->
     <router-outlet  #o="outlet"></router-outlet>
   </div>
 </section>
