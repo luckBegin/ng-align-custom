@@ -45,7 +45,6 @@ class DateDeal {
     for (let code of format) {
       _arr.push(code.toUpperCase());
     }
-    ;
 
 
     if (isStamp.test(dateStr)) {
@@ -54,7 +53,6 @@ class DateDeal {
     } else {
       _date = new Date(dateStr);
     }
-    ;
 
     let dateObj = {
       Y: _date.getFullYear(),
