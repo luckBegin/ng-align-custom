@@ -34,6 +34,8 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
               this.msg.error("操作失败,原因 : " + res.message)
             };
 
+            el.disabled = false ;
+
             return res.success === true ;
           })
         )
