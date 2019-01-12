@@ -105,7 +105,9 @@ export class DepartComponent implements OnInit{
     this.getList() ;
   };
 
-  @Service("service.post" , true , () => this.validateForm.value )
+  @Service("service.post" , true , function(){
+    return this.validateForm.value
+  })
   makeNew($event : Event){
     this.msg.success("新建部门成功")
     this.infoBoxShow = false ;
@@ -118,4 +120,5 @@ export class DepartComponent implements OnInit{
     this.infoBoxShow = false ;
     this.getList() ;
   };
+
 };
