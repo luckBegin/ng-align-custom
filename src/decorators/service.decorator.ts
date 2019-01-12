@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { RESPONSE } from '../app/models';
-import { filter } from 'rxjs/operators';
+import { filter} from 'rxjs/operators';
+
 export function Service( serviceName : string , prevent : boolean ,  data : Function ){
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ){
     if(!/\w+.\w+/g.test(serviceName)){
@@ -11,7 +12,7 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
     descriptor.value = function(...args){
       const $event = args[0] as Event ;
       const el = $event.target as HTMLButtonElement ;
-        el.disabled = true ;
+      el.disabled = true ;
 
       const service = serviceName.split(".") ;
 
@@ -27,7 +28,7 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
             args.push( res ) ;
 
             if(prevent === false && res.success === false ){
-                raw.apply(this , args) ;
+              raw.apply(this , args) ;
             };
 
             if(prevent === true && res.success === false ){
@@ -42,6 +43,7 @@ export function Service( serviceName : string , prevent : boolean ,  data : Func
         .subscribe( ( data : any ) => {
           raw.apply(this , args) ;
         } , err => {
+          this.msg.error("填写的数据不合法") ;
           el.disabled = false ;
         });
     }

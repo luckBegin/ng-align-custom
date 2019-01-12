@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RESPONSE } from '../app/models';
 import { HttpHeaders } from '@angular/common/http';
+import { url } from 'inspector';
 export function GET( url : string ,msg : string = '获取数据失败,原因 : ') : MethodDecorator {
   return function ( target : any, propertyKey : string, descriptor : PropertyDescriptor ) {
     const raw = descriptor.value ;
@@ -23,6 +24,8 @@ export function GET( url : string ,msg : string = '获取数据失败,原因 : '
           )
           .subscribe( res => {
             obsr.next(res) ;
+          }, err => {
+            obsr.error({ data : err }) ;
           })
       });
     };
@@ -35,7 +38,7 @@ export function POST( url : string  , json : boolean = true , msg : string = '�
     descriptor.value = function( ...arg ){
       const data = arg[0] ;
       const headers = new HttpHeaders()
-        if(json)
+      if(json)
         headers.append("Content-type" , "application/json") ;
 
       return new Observable( obsr => {
@@ -49,11 +52,14 @@ export function POST( url : string  , json : boolean = true , msg : string = '�
                 this.msg.error(msg + res.message) ;
                 obsr.error(res) ;
               };
+
               return res.success === true ;
             }),
           )
           .subscribe( res => {
             obsr.next(res) ;
+          } , err => {
+            obsr.error({ data : err }) ;
           })
       });
     };
@@ -86,6 +92,8 @@ export function PUT( url : string  , withId : boolean = false , msg : string = '
           )
           .subscribe( res => {
             obsr.next(res) ;
+          }, err => {
+            obsr.error({ data : err }) ;
           })
       });
     };
@@ -111,6 +119,8 @@ export function DELETE( url : string ,  msg : string = '删除失败,原因 : ' 
           )
           .subscribe( res => {
             obsr.next(res) ;
+          }, err => {
+            obsr.error({ data : err }) ;
           })
       });
     };
