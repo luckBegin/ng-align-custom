@@ -26,13 +26,13 @@ const recursive = function(target : any[] , data : any[] , map : { title : strin
   data.forEach( item => {
     let _obj = new TreeNodes( item[map['title'] ] , item[map['key'] ] , parent ) ;
     target.push(_obj) ;
-
     Object.keys(item).forEach( ( key ) => {
       if(key != 'children')
         _obj[key] = item[key] ;
     });
-    if(item.children)
+    if(item.children){
       recursive(_obj.children , item.children , map , item ) ;
+    }
   });
 };
 export const AdaptorUtils = {
@@ -47,18 +47,18 @@ export const AdaptorUtils = {
           if(item[keys])
           _obj[map[keys]] = item[keys] ;
         });
+        console.log(_obj) ;
         _arr.push(_obj) ;
       });
       return _arr
     };
+
     return target ;
   },
 
   makeTreeNode(map : { title : string , key : string | number } , data : any[]) : TreeNodes[] {
-    var _arr = [] ;
-
+    const _arr = [] ;
     recursive( _arr , data , map) ;
-
     return _arr ;
   }
 };

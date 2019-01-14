@@ -10,21 +10,7 @@ export class DepartService {
 
   get(){
     const url = API.system.depart.list ;
-    // return this.http.get(url);
-
-    return new Observable( obsr => {
-      setTimeout( () => {
-        obsr.next({
-          success : true ,
-          code :  1 ,
-          data : [
-            { id  : 6 , name : 111 , description : "123" , children  : [{ id  : 11_11 , name : 11_11 , description : "123" , children  : [] }] },
-            { id  : 222 , name : 222 , description : "123" , children  : [{ id  : 22_22 , name : 22_22 , description : "123" , children  : [] }] },
-            { id  : 333 , name : 333 , description : "123" , children  : [{ id  : 33_33 , name : 33_33 , description : "123" , children  : [] }] }
-          ]
-        })
-      }  , 1000 ) ;
-    });
+    return this.http.get(url);
   };
 
   post(departObj : object){

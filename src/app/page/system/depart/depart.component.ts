@@ -79,7 +79,6 @@ export class DepartComponent implements OnInit{
   del(){
     this.menuShow = false ;
     this.isVisible = true ;
-
     this.validateForm.patchValue({ id : this.currentItem.key }) ;
   };
 
