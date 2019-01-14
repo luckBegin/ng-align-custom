@@ -27,7 +27,7 @@
 </div>
 
 <div class="menu" *ngIf="menuShow" [@ngIfAnimate] [style.top]="mouseHeight + 'px'">
-  <div class="menu_item borderItem" (click)="add()">
+  <div class="menu_item borderItem" (click)="add(false)">
     <i nz-icon type="plus" theme="outline"></i>
     添加
   </div>

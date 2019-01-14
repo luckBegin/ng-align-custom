@@ -45,7 +45,7 @@ export class DepartComponent implements OnInit{
   validateForm : FormGroup = this.fb.group({
     "name" : [null , [Validators.required]] ,
     "description" : [null , [Validators.required]] ,
-    "parentId" : [ 0 ] ,
+    "parentId" : [] ,
     'id' : [ null ]
   });
 
@@ -71,7 +71,7 @@ export class DepartComponent implements OnInit{
     if(isParent)
       this.validateForm.patchValue({ id :  0 } ) ;
     else{
-      const pid = this.currentItem.parentNode ? this.currentItem.key : 0 ;
+      const pid = this.currentItem.key ;
       this.validateForm.patchValue({ parentId : pid } ) ;
     };
   };
@@ -89,23 +89,26 @@ export class DepartComponent implements OnInit{
     this.validateForm.patchValue({
       id : this.currentItem.key ,
       name : this.currentItem.title ,
-      description : this.currentItem.origin.description
-    })
+      description : this.currentItem.origin.description ,
+      parentId : this.currentItem.origin.parentId ? this.currentItem.origin.parentId : null
+    });
   };
 
   isVisible : boolean = false ;
 
   currentItem : any = {} ;
 
-  @Service("service.delete" , true , () => this.validateForm.value )
+  @Service("service.delete" , true , function(){
+    return this.validateForm.value ;
+  })
   modalConfirm($event){
     this.msg.success("删除成功") ;
     this.isVisible = false ;
     this.getList() ;
   };
 
-  @Service("service.post" , true , function(){
-    return this.validateForm.value
+  @Service("service.post" , true ,function(){
+    return this.validateForm.value ;
   })
   makeNew($event : Event){
     this.msg.success("新建部门成功")
@@ -113,11 +116,13 @@ export class DepartComponent implements OnInit{
     this.getList() ;
   };
 
-  @Service("service.put" , true , () => this.validateForm.value )
+  @Service("service.put" , true , function(){
+    return this.validateForm.value ;
+  })
   save($event){
     this.msg.success("部门修改成功") ;
     this.infoBoxShow = false ;
     this.getList() ;
   };
 
-};
+}

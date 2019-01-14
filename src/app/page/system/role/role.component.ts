@@ -29,7 +29,8 @@ export class RoleComponent implements OnInit {
   } ;
 
   ngOnInit() {
-    this.getAllMenu();
+    this.getAllMenu() ;
+    this.getRoleList() ;
   };
 
   form: FormGroup = this.fb.group({
@@ -41,6 +42,7 @@ export class RoleComponent implements OnInit {
   tableData = {
     loading: true,
     page: 1,
+    total : 0 ,
     columns: [
       { title: '角色名', type: 'text', reflect: 'name' },
       { title: '备注', type: 'text', reflect: 'description' },
@@ -67,6 +69,15 @@ export class RoleComponent implements OnInit {
         },
       ],
     },
+    change : (type : string , size : number ) => {
+        if(type === 'size')
+          this.queryModel.pageSize = size ;
+        if(type === 'page'){
+          this.tableData.page = size ;
+          this.queryModel.currentPage = size ;
+        }
+        this.getRoleList();
+    }
   };
 
   queryModel: QueryModel = new QueryModel;
@@ -108,12 +119,6 @@ export class RoleComponent implements OnInit {
       });
   };
 
-  pageChange($event) {
-    ($event.type == 'size') && (this.queryModel.pageSize = $event.number);
-    ($event.type == 'page') && (this.queryModel.currentPage = $event.number);
-    this.getRoleList();
-  };
-
   addNewRole() {
     this.form.reset();
     this.selectRoles = [];
@@ -127,10 +132,15 @@ export class RoleComponent implements OnInit {
       .subscribe((res: RESPONSE) => {
         this.tableData.loading = false;
         this.tableData.data = res.data;
+
+        if(res.page)
+          this.tableData.total = res.page.totalNumber ;
       });
   }
 
-  @Service('service.delete', true, () => this.form.value)
+  @Service('service.delete', true, function(){
+    return this.form.value ;
+  })
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;
@@ -153,7 +163,7 @@ export class RoleComponent implements OnInit {
   @CombineAll()
   makeNew($event :Event, selectdRoles : string[] ): void {
     const value = this.form.value ;
-    value['menuIds '] = selectdRoles ;
+    value['menuIds'] = selectdRoles ;
 
     const ele = $event.target as HTMLButtonElement ;
 
@@ -183,7 +193,7 @@ export class RoleComponent implements OnInit {
   @CombineAll()
   save($event : Event ,  selectdRoles : string[]): void {
     const value = this.form.value ;
-    value['menuIds '] = selectdRoles ;
+    value['menuIds'] = selectdRoles ;
 
     const ele = $event.target as HTMLButtonElement ;
 
@@ -192,6 +202,9 @@ export class RoleComponent implements OnInit {
     this.service.put(value)
       .subscribe( ( res : RESPONSE) => {
         this.infoBoxShow = false ;
+
+        ele.disabled = false ;
+
         this.getRoleList() ;
       })
   };

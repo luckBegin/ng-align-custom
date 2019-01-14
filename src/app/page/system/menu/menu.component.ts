@@ -55,7 +55,9 @@ export class MenuComponent implements OnInit {
   createLocale(item ?: any) : FormGroup{
     return this.fb.group({
       "description" : [item ? item.description : "" , [Validators.required] ] ,
-      "locale" : ['zh-cn' , [Validators.required] ]
+      "locale" : ['zh-cn' , [Validators.required] ] ,
+      "id" : [ null ] ,
+      "menuId" : [ null ]
     });
   };
 
@@ -85,7 +87,7 @@ export class MenuComponent implements OnInit {
     if (isParent)
       this.validateForm.patchValue({ id: 0 });
     else {
-      const pid = this.currentItem.node.parentNode ? this.currentItem.node.key : 0;
+      const pid =  this.currentItem.key ;
       this.validateForm.patchValue({ parentId: pid });
     };
   };
@@ -116,25 +118,31 @@ export class MenuComponent implements OnInit {
     this.mouseHeight = $event.event.pageY - 70;
     this.menuShow = true;
     this.currentItem = $event.node;
-  };s
+  };
 
-  @Service('service.delete', true,() => this.validateForm.value )
+  @Service('service.delete', true , function(){
+    return this.validateForm.value
+  })
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;
     this.getList();
   };
 
-  @Service('service.post', true, () => this.validateForm.value )
+  @Service('service.post', true, function(){
+    return this.validateForm.value
+  })
   makeNew($event: Event): void {
-    this.msg.success("新建菜单成功")
+    this.msg.success("新建菜单成功") ;
     this.infoBoxShow = false ;
     this.getList() ;
   };
 
-  @Service('service.put', true, () => this.validateForm.value )
+  @Service('service.put', true,function(){
+    return this.validateForm.value ;
+  })
   save($event: Event): void {
-    this.msg.success("修改成功")
+    this.msg.success("修改成功") ;
     this.infoBoxShow = false ;
     this.getList() ;
   };
