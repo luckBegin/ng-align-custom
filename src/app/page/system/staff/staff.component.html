@@ -1,4 +1,4 @@
-<page-header [title]="'员工管理'">
+<page-header [title]="'管理员列表'">
 </page-header>
 
 <div class="c-container">
@@ -16,12 +16,10 @@
     >
       新增
     </button>
-    <common-table [TableData]="tableData" (change)="pageChange($event)">
+    <common-table [TableData]="tableData">
     </common-table>
   </div>
-
 </div>
-
 
 <nz-modal [nzVisible]="isVisible" [nzTitle]="refuseTitle" [nzContent]="refuseContent" [nzFooter]="refuseFooter"
           (nzOnCancel)="isVisible = false">

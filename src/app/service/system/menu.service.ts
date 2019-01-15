@@ -48,8 +48,6 @@ export class SysMenuService {
     });
   };
 
-  // @ts-ignore
   @POST(API.system.login)
-  login(data: FormData){};
-
+  login( data: any ){};
 };

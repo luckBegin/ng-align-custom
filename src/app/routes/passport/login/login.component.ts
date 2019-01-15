@@ -121,15 +121,16 @@ export class UserLoginComponent implements OnDestroy {
     formData.append("password" , this.password.value ) ;
 
     this.ss.set("loginInfo" , true ) ;
-    this.getMenu(3) ;
-    //
-    // ( <Observable<any>> < any >this.menuSer.login(formData) )
-    //   .subscribe( ( res : any ) => {
-    //     this.ss.set('loginInfo' , res.message) ;
-    //     this.reuseTabService.clear();
-    //     this.getMenu(res.data.id) ;
-    //     // this.startupSrv.load().then(() => this.router.navigate(['/']));
-    //   });
+    // this.getMenu(3) ;
+
+    ( <Observable<any>> < any >this.menuSer.login( { username : this.userName.value , password : this.password.value }) )
+      .subscribe( ( res : any ) => {
+        this.ss.set('loginInfo' , res.data) ;
+        this.reuseTabService.clear();
+        this.getMenu(res.data.id) ;
+        // this.startupSrv.load().then(() => this.router.navigate(['/']));
+      } , err => {
+      });
 
     // this.http
     //   .post('/login/account?_allow_anonymous=true', {
@@ -175,7 +176,7 @@ export class UserLoginComponent implements OnDestroy {
       )
       .subscribe( ( res : RESPONSE) => {
         this.ss.set("menuInfo" , res.data) ;
-        this.router.navigate(['/']) ;
+        this.router.navigate(['/'])
       })
   }
 }

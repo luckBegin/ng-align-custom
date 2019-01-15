@@ -3,10 +3,10 @@ import { MsgService } from '../../../service/msg/msg.service';
 import { StaffService } from '../../../service/system/staff.service';
 import { QueryModel } from './query.model';
 import { ENUM, RESPONSE } from '../../../models';
-import { AdaptorUtils , ObjectUtils } from '@shared/utils';
+import { AdaptorUtils, ObjectUtils } from '@shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Service } from '../../../../decorators/service.decorator';
-import { DepartService, RoleService  , SysMenuService} from '../../../service/system';
+import { DepartService, RoleService, SysMenuService } from '../../../service/system';
 import { NzTreeComponent } from 'ng-zorro-antd';
 import { Before, CombineAll } from '../../../../decorators/function.decorator';
 import { Observable } from 'rxjs';
@@ -30,6 +30,7 @@ export class StaffComponent implements OnInit {
   ngOnInit(): void {
     this.getRoleList();
     this.getDeaprt();
+    this.getStaffList();
   };
 
   isVisible: boolean = false;
@@ -96,24 +97,33 @@ export class StaffComponent implements OnInit {
         },
       ],
     },
+    change: (type: string, size: number) => {
+      if (type === 'size')
+        this.queryModel.pageSize = size;
+      if (type === 'page') {
+        this.tableData.page = size;
+        this.queryModel.currentPage = size;
+      }
+      this.getStaffList();
+    },
   };
 
   searchBarData = {
     conditions: [
-      { name: '用户名', type: 'input' , model : "username" , placeHolder: '请输入用户名'},
-      { name: '手机号', type: 'input', model : "phoneNumber" , placeHolder: '请输入手机号'},
-      { name: '真实姓名', type: 'input' , model : "description" , placeHolder: '请输入真实姓名' },
+      { name: '用户名', type: 'input', model: 'username', placeHolder: '请输入用户名' },
+      { name: '手机号', type: 'input', model: 'phoneNumber', placeHolder: '请输入手机号' },
+      { name: '真实姓名', type: 'input', model: 'description', placeHolder: '请输入真实姓名' },
     ],
-    notify : {
-      query : ( data : QueryModel ) =>  { this.queryModel = ObjectUtils.extend(this.queryModel , data)  as QueryModel ; this.getStaffList() },
-      reset : ( data : QueryModel ) => { this.queryModel = new QueryModel ; this.getStaffList() } ,
-    }
-  };
-
-  pageChange($event) {
-    ($event.type == 'size') && (this.queryModel.pageSize = $event.number);
-    ($event.type == 'page') && (this.queryModel.currentPage = $event.number);
-    this.getStaffList();
+    notify: {
+      query: (data: QueryModel) => {
+        this.queryModel = ObjectUtils.extend(this.queryModel, data) as QueryModel;
+        this.getStaffList();
+      },
+      reset: (data: QueryModel) => {
+        this.queryModel = new QueryModel;
+        this.getStaffList();
+      },
+    },
   };
 
   getStaffList() {
@@ -127,10 +137,13 @@ export class StaffComponent implements OnInit {
   add() {
     this.editMark = false;
     this.formShow = true;
+    this.selectDeaprt = [];
     this.form.reset();
   };
 
-  @Service('service.delete', true, () => this.form.value )
+  @Service('service.delete', true, function() {
+    return this.form.value;
+  })
   modalConfirm($event: Event) {
     this.msg.success('删除成功');
     this.isVisible = false;
@@ -145,13 +158,11 @@ export class StaffComponent implements OnInit {
       this.msg.warn('未选择部门');
       return;
     }
-    ;
 
     if (!this.form.value.password) {
       this.msg.warn('未设置初始密码');
       return;
     }
-    ;
 
     return new Observable(obsr => {
       const _arr = [];
@@ -164,39 +175,38 @@ export class StaffComponent implements OnInit {
   @CombineAll()
   makeNew($event: Event, selectKeys: string[]): void {
     const value = this.form.value;
-    value['departmentIds '] = selectKeys;
+    value['departmentIds'] = selectKeys;
     this.service.post(value)
       .subscribe((res: RESPONSE) => {
-        this.msg.notifySuccess('新建员工成功', `用户名为: ${value.username} , 密码:${value.password}`);
+        this.msg.notifySuccess('新建管理员成功', `用户名为: ${value.username} , 密码:${value.password}`);
         this.formShow = false;
+        this.getStaffList();
       });
   };
 
   @Before(function($event: Event) {
     const selectKeys = this.treeCom.nzTreeService.getCheckedNodeList();
-    console.log(this.form);
 
     if (selectKeys.length === 0) {
       this.msg.warn('未选择部门');
       return;
-    };
+    }
 
     return new Observable(obsr => {
       const _arr = [];
-
       selectId(selectKeys, _arr);
-
       obsr.next(_arr);
     });
   })
   @CombineAll()
   save($event: Event, selectKeys: string[]): void {
     const value = this.form.value;
-    value['departmentIds '] = selectKeys;
-    this.service.post(value)
+    value['departmentIds'] = selectKeys;
+    this.service.put(value)
       .subscribe((res: RESPONSE) => {
         this.msg.success('修改成功');
         this.formShow = false;
+        this.getStaffList() ;
       });
   };
 
@@ -228,11 +238,12 @@ export class StaffComponent implements OnInit {
     data.roleOutputVOS.forEach(item => {
       roles.push(item.name);
     });
+
     data.departmentDTOS.forEach(item => {
       departs.push(item.id);
     });
 
-    data.roleIds = roles;
+    // data.roleIds = roles;
 
     this.selectDeaprt = departs;
 
