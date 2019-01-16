@@ -3,7 +3,7 @@ import { API } from '../API';
 import { ObjToQuery } from '../ObjToQuery' ;
 import { HttpClient ,  HttpHeaders } from '@angular/common/http';
 import { PUT } from '../../../decorators/request.decorator';
-import { MsgService } from '..';
+import { MsgService } from '../msg/msg.service';
 
 @Injectable({providedIn : 'root'})
 export class StaffService{
@@ -55,4 +55,4 @@ export class StaffService{
     const url = API.system.staff + "/" + id ;
     return this.http.get(url) ;
   };
-};
+}
