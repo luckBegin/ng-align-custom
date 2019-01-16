@@ -18,7 +18,9 @@ const THIRDMODULES = [
 import { TableComponent } from './component/table/table.component';
 import { SearchBarComponent } from './component/search-bar/search-bar.component';
 import { ModalComponent } from './component/modal/modal.component';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { HttpIntercept } from '@shared/interceptor.service';
+import { HttpIntercept } from './interceptor.service' ;
 // #region your componets & directives
 const COMPONENTS = [ TableComponent , SearchBarComponent , ModalComponent ];
 const DIRECTIVES = [];
@@ -58,7 +60,7 @@ const DIRECTIVES = [];
     ...DIRECTIVES ,
   ],
   providers : [
-    // {provide: HTTP_INTERCEPTORS, useClass: HttpIntercept, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: HttpIntercept, multi: true }
   ]
 })
 export class SharedModule { }
