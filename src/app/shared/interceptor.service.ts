@@ -19,7 +19,7 @@ export class HttpIntercept implements HttpInterceptor {
     let headers ;
 
     let obj = {
-        'withCredentials': true ,
+        // 'withCredentials': true ,
         setParams : {
           // "lang" : this.sgo.get("locale")
         }
