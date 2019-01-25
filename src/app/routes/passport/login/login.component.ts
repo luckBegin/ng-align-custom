@@ -17,7 +17,6 @@ import { RESPONSE } from '../../../models';
 import { filter } from 'rxjs/operators';
 import { SesssionStorageService } from '../../../service/storage';
 import { Observable } from 'rxjs';
-import { FileUtils } from '@shared/utils/toFile';
 
 @Component({
   selector: 'passport-login',
@@ -81,7 +80,7 @@ export class UserLoginComponent implements OnDestroy {
 
   count = 0;
   interval$: any;
-
+  loading : boolean = false ;
   getCaptcha() {
     if (this.mobile.invalid) {
       this.mobile.markAsDirty({ onlySelf: true });
@@ -121,14 +120,17 @@ export class UserLoginComponent implements OnDestroy {
 
     this.ss.set("loginInfo" , true ) ;
     // this.getMenu(3) ;
+	  this.loading = !this.loading ;
 
     ( <Observable<any>> < any >this.menuSer.login( { username : this.userName.value , password : this.password.value }) )
       .subscribe( ( res : any ) => {
+      	this.loading = true ;
         this.ss.set('loginInfo' , res.data) ;
         this.reuseTabService.clear();
         this.getMenu(res.data.id) ;
         // this.startupSrv.load().then(() => this.router.navigate(['/']));
       } , err => {
+      	this.loading = false ;
       });
 
     // this.http
