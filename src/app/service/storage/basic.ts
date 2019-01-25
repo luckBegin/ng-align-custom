@@ -10,21 +10,23 @@ export class Storage{
     };
 
     set( key : string , value : Array< any > | Object | number | string | boolean ) : Storage {
-        if( this.typeCheck("String",value) ){
-			this.storage[key] = value;
-		}else{
-			this.storage[key] = JSON.stringify(value);
-		};
-        return this ;
+
+      if( this.typeCheck("String",value) ){
+			  this.storage[key] = value;
+      }else{
+        this.storage[key] = JSON.stringify(value);
+      }
+
+      return this ;
     };
 
     get( key : string ) : any {
-		const value = this.storage[key];
-		try{
-			return JSON.parse(value);
-		}catch(e){
-			return value
-		};
+      const value = this.storage[key];
+      try{
+        return JSON.parse(value);
+      }catch(e){
+        return value
+      };
     };
 
     clear() : Storage {
@@ -33,9 +35,9 @@ export class Storage{
     };
 
     remove( list : Array< String > ) : Storage {
-		for(var key in list){
-			this.storage['removeItem'](list[key]) ;
-		};
-		return this;
+      for(var key in list){
+        this.storage['removeItem'](list[key]) ;
+      };
+      return this;
     };
-};
+}

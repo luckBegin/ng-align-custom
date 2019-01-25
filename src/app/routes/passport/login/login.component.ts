@@ -17,6 +17,7 @@ import { RESPONSE } from '../../../models';
 import { filter } from 'rxjs/operators';
 import { SesssionStorageService } from '../../../service/storage';
 import { Observable } from 'rxjs';
+import { FileUtils } from '@shared/utils/toFile';
 
 @Component({
   selector: 'passport-login',
@@ -95,10 +96,8 @@ export class UserLoginComponent implements OnDestroy {
   }
 
   // #endregion
-
   submit() {
     this.error = '';
-
     if (this.type === 0) {
       this.userName.markAsDirty();
       this.userName.updateValueAndValidity();
