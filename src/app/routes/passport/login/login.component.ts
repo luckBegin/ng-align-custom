@@ -178,6 +178,6 @@ export class UserLoginComponent implements OnDestroy {
       .subscribe( ( res : RESPONSE) => {
         this.ss.set("menuInfo" , res.data) ;
         this.router.navigate(['/'])
-      })
+      } )
   }
 }
