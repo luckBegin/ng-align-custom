@@ -99,7 +99,7 @@ export class StaffComponent implements OnInit {
     },
     change: (type: string, size: number) => {
       if (type === 'size')
-        this.queryModel.pageSize = size;
+        this.queryModel.pageSize = size;csaaaaaaaascacsacsasacsac
       if (type === 'page') {
         this.tableData.page = size;
         this.queryModel.currentPage = size;
