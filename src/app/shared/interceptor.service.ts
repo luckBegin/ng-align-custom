@@ -68,7 +68,7 @@ export class HttpIntercept implements HttpInterceptor {
 						this.msg.error('管理员告诉我你没权限访问这个');
 						this.router.navigate(['/403']);
 					}
-					
+
 					return throwError(err);
 				}),
 			);
