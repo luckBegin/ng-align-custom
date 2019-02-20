@@ -12,8 +12,7 @@ export class HttpIntercept implements HttpInterceptor {
 		private router: Router,
 		private msg: MsgService,
 		private sgo: SesssionStorageService,
-	) {
-	}
+	) {}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): any {
 
@@ -71,6 +70,6 @@ export class HttpIntercept implements HttpInterceptor {
 
 					return throwError(err);
 				}),
-			);
+			)
 	};
 }
