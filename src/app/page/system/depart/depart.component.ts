@@ -124,5 +124,4 @@ export class DepartComponent implements OnInit{
     this.infoBoxShow = false ;
     this.getList() ;
   };
-
 }

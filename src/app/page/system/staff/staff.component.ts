@@ -24,8 +24,7 @@ export class StaffComponent implements OnInit {
     private departSer: DepartService,
     private roleSer: RoleService,
     private fb: FormBuilder,
-  ) {
-  } ;
+  ) {} ;
 
   ngOnInit(): void {
     this.getRoleList();
@@ -151,16 +150,15 @@ export class StaffComponent implements OnInit {
   };
 
   @Before(function($event: Event) {
-    const selectKeys = this.treeCom.nzTreeService.getCheckedNodeList();
-    console.log(this.form);
+    const selectKeys = (this as StaffComponent).treeCom.nzTreeService.getCheckedNodeList();
 
     if (selectKeys.length === 0) {
-      this.msg.warn('未选择部门');
+      (this as StaffComponent).msg.warn('未选择部门');
       return;
     }
 
-    if (!this.form.value.password) {
-      this.msg.warn('未设置初始密码');
+    if (!(this as StaffComponent).form.value.password) {
+      (this as StaffComponent).msg.warn('未设置初始密码');
       return;
     }
 
@@ -185,10 +183,10 @@ export class StaffComponent implements OnInit {
   };
 
   @Before(function($event: Event) {
-    const selectKeys = this.treeCom.nzTreeService.getCheckedNodeList();
 
+    const selectKeys = (this as StaffComponent).treeCom.nzTreeService.getCheckedNodeList();
     if (selectKeys.length === 0) {
-      this.msg.warn('未选择部门');
+      (this as StaffComponent).msg.warn('未选择部门');
       return;
     }
 
