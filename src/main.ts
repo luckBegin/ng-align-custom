@@ -22,6 +22,8 @@ const bootstrap = () => {
   });
 };
 
+
+
 if (environment.hmr) {
   if (module[ 'hot' ]) {
     hmrBootstrap(module, bootstrap);
